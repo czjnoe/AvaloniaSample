@@ -9,8 +9,6 @@ namespace AvaloniaSample.Views
 {
     public partial class MainWindow : Window
     {
-        public MainWindowViewModel ViewModel { get; } = new MainWindowViewModel();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -21,6 +19,22 @@ namespace AvaloniaSample.Views
             if (DataContext is MainWindowViewModel viewModel)
             {
                 viewModel.People.Add(new Person("New", "Person", 25));
+            }
+        }
+
+        private void saveBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+
+            }
+        }
+
+        private void editBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+                viewModel.People[0].FirstName = "Edited";
             }
         }
     }

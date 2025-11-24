@@ -4,6 +4,9 @@ using ReactiveUI.Avalonia;
 
 namespace AvaloniaSample
 {
+    /// <summary>
+    /// 使用文档：https://docs.avaloniaui.net/zh-Hans/docs/get-started/install
+    /// </summary>
     internal sealed class Program
     {
         // Initialization code. Don't use any Avalonia, third-party APIs or any

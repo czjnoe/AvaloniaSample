@@ -1,30 +1,90 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using AvaloniaSample.Services;
 using AvaloniaSample.ViewModels;
 using AvaloniaSample.Views;
+using Prism.DryIoc;
+using Prism.Ioc;
+using Prism.Modularity;
 
 namespace AvaloniaSample
 {
-    public partial class App : Application
+    /// <summary>
+    /// 使用 Prism 框架的 Avalonia 应用程序的入口点。参考：https://github.com/AvaloniaCommunity/Prism.Avalonia
+    /// </summary>
+    public partial class App : PrismApplication
     {
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            base.Initialize();  // Required to initialize Prism.Avalonia - DO NOT REMOVE
         }
 
-        public override void OnFrameworkInitializationCompleted()
+        //public override void OnFrameworkInitializationCompleted()
+        //{
+        //    if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        //    {
+        //        desktop.MainWindow = new MainWindow
+        //        {
+        //            DataContext = new MainWindowViewModel(),
+        //        };
+        //    }
+
+        //    base.OnFrameworkInitializationCompleted();
+        //}
+
+        protected override AvaloniaObject CreateShell()
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(),
-                };
-            }
+            Console.WriteLine("CreateShell()");
 
-            base.OnFrameworkInitializationCompleted();
+            return Container.Resolve<MainWindow>();
         }
 
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            // Add Services and ViewModel registrations here
+
+            Console.WriteLine("RegisterTypes()");
+
+            // Services
+            containerRegistry.RegisterSingleton<ISampleService, SampleService>();
+            containerRegistry.RegisterSingleton<ISettings, Settings>();
+
+            // Views - Region Navigation
+            //// containerRegistry.RegisterForNavigation<DashboardView, DashboardViewModel>();
+
+            // Dialogs
+            //containerRegistry.RegisterDialog<WarningDialog, WarningDialogViewModel>("WarningDialog");
+            //// containerRegistry.RegisterDialogWindow<CustomDialogWindow>(nameof(CustomDialogWindow));
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            // Register modules
+            //// moduleCatalog.AddModule<DummyModule.DummyModule1>();
+        }
     }
+
+    //public partial class App : Application
+    //{
+    //    public override void Initialize()
+    //    {
+    //        AvaloniaXamlLoader.Load(this);
+           
+    //    }
+
+    //    public override void OnFrameworkInitializationCompleted()
+    //    {
+    //        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+    //        {
+    //            desktop.MainWindow = new MainWindow
+    //            {
+    //                DataContext = new MainWindowViewModel(),
+    //            };
+    //        }
+
+    //        base.OnFrameworkInitializationCompleted();
+    //    }
+    //}
 }

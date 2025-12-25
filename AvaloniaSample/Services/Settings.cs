@@ -15,15 +15,11 @@
 
         public string ManagedFolder { get; set; } = null!;
 
-        public bool AutoRemoveDeps { get; }
-
-        public bool RequiresWorkaroundClient { get; set; }
-
         public GamePlatform Platform { get; set; } = GetDefaultPlatform();
 
-        public string PreferredCulture { get; set; } = CultureInfo.CurrentUICulture.Name;
+        public string DefaultCulture { get; set; } = CultureInfo.CurrentUICulture.Name;
 
-        public Theme PreferredTheme { get; set; } = Theme.Dark;
+        public Theme DefaultTheme { get; set; } = Theme.Dark;
 
         private static GamePlatform GetDefaultPlatform()
         {
@@ -74,8 +70,6 @@
             try
             {
                 var res = JsonSerializer.Deserialize<Settings>(content);
-                res?.DetectLinuxGamePlatform();
-
                 return res;
             }
             // The JSON is malformed, act as if we don't have settings as a backup
@@ -89,51 +83,8 @@
         {
             // Create from ManagedPath.
             var settings = new Settings(path);
-            settings.DetectLinuxGamePlatform();
-
             settings.Save();
-
             return settings;
-        }
-
-        /// <summary>
-        /// If the users is using proton, swap the platform to Windows and vice versa.
-        ///
-        /// Called on both creation and loading of settings in case
-        /// a user swaps after a previous use of the application.
-        /// </summary>
-        private void DetectLinuxGamePlatform()
-        {
-            if (GetDefaultPlatform() != GamePlatform.Linux)
-                return;
-
-            var prev = Platform;
-
-            try
-            {
-                string @base = System.IO.Path.GetFullPath(System.IO.Path.Combine(ManagedFolder, "..", ".."));
-
-                Platform = File.Exists(System.IO.Path.Combine(@base, "hollow_knight.exe"))
-                    // We're on proton.
-                    ? GamePlatform.Windows
-                    // Native
-                    : GamePlatform.Linux;
-
-                Log.Logger.Debug("Platform detected: {Platform}", Platform);
-
-                if (prev != Platform)
-                {
-                    Log.Logger.Information("Platform changed from {Prev} to {Platform}, forcing re-installs!", prev, Platform);
-                    PlatformChanged = true;
-                }
-            }
-            catch (ArgumentException e)
-            {
-                Log.Logger.Error("Failure in path resolution for linux platform detection: {Path} with {Exception}",
-                    ManagedFolder,
-                    e
-                );
-            }
         }
 
         public void Save()
@@ -151,11 +102,11 @@
         {
             Debug.Assert(Application.Current is not null);
 
-            Application.Current.RequestedThemeVariant = PreferredTheme == Theme.Dark
+            Application.Current.RequestedThemeVariant = DefaultTheme == Theme.Dark
                 ? ThemeVariant.Dark
                 : ThemeVariant.Light;
 
-            LocalizeExtension.ChangeLanguage(new CultureInfo(PreferredCulture));
+            LocalizeExtension.ChangeLanguage(new CultureInfo(DefaultCulture));
         }
     }
 }

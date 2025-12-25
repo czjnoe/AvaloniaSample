@@ -1,5 +1,7 @@
-﻿using DryIoc;
+﻿using Avalonia.Controls;
+using DryIoc;
 using Prism.Dialogs;
+using Prism.Ioc;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -38,7 +40,7 @@ namespace AvaloniaSample.ViewModels
 
         private void AddClick()
         {
-            Peoples.Add(new Person());
+            ContainerLocator.Container.Resolve<UserAddView>().ShowDialog(App.Instance.MainWindow as Window);
         }
 
         private async void EditClick(Person data)

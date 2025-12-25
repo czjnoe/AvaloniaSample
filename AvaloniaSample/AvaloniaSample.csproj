@@ -38,6 +38,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\UserAddView.axaml.cs">
+      <DependentUpon>UserAddView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

@@ -15,6 +15,8 @@ namespace AvaloniaSample
     /// </summary>
     public partial class App : PrismApplication
     {
+        public static App Instance { get; private set; }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -23,6 +25,7 @@ namespace AvaloniaSample
 
         protected override AvaloniaObject CreateShell()
         {
+            Instance = this;
             return Container.Resolve<MainWindow>();
         }
 
@@ -47,6 +50,7 @@ namespace AvaloniaSample
             // Dialogs
             containerRegistry.RegisterDialog<WarningDialog, WarningDialogViewModel>("WarningDialog");
             containerRegistry.RegisterDialog<UserEditView, UserEditViewModel>("UserEditView");
+            containerRegistry.RegisterDialog<UserAddView, UserAddViewModel>("UserAddView");
         }
 
         /// <summary>
@@ -55,7 +59,7 @@ namespace AvaloniaSample
         /// <param name="moduleCatalog"></param>
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            
+
             //// moduleCatalog.AddModule<DummyModule.DummyModule1>();
         }
     }

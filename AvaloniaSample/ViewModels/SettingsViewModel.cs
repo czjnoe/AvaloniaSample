@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Styling;
 using Prism.DryIoc.Properties;
 using ReactiveUI;
+using Semi.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,11 @@ namespace AvaloniaSample.ViewModels
         public static ThemeVariant[] Themes => new[]
         {
         ThemeVariant.Dark,
-        ThemeVariant.Light
+        ThemeVariant.Light,
+        SemiTheme.Aquatic,
+        SemiTheme.Desert,
+        SemiTheme.Dusk,
+        SemiTheme.NightSky
     };
 
         private ThemeVariant _theme;
@@ -56,9 +61,9 @@ namespace AvaloniaSample.ViewModels
         {
             Settings = settings;
 
-            Selected = settings.PreferredCulture;
+            Selected = settings.DefaultCulture;
 
-            _theme = settings.PreferredTheme == Enums.Theme.Dark
+            _theme = settings.DefaultTheme == Enums.Theme.Dark
                 ? ThemeVariant.Dark
                 : ThemeVariant.Light;
 
@@ -70,7 +75,7 @@ namespace AvaloniaSample.ViewModels
                     if (string.IsNullOrEmpty(item))
                         return;
 
-                    settings.PreferredCulture = item;
+                    settings.DefaultCulture = item;
 
                     settings.Apply();
                     settings.Save();
@@ -83,7 +88,7 @@ namespace AvaloniaSample.ViewModels
                         var t = o.GetValue();
 
                         Application.Current!.RequestedThemeVariant = t;
-                        settings.PreferredTheme = t == ThemeVariant.Dark
+                        settings.DefaultTheme = t == ThemeVariant.Dark
                             ? AvaloniaSample.Enums.Theme.Dark
                             : AvaloniaSample.Enums.Theme.Light;
 

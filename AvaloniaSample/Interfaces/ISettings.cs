@@ -14,9 +14,9 @@ namespace AvaloniaSample.Interfaces
 
         string ManagedFolder { get; set; }
 
-        string PreferredCulture { get; set; }
+        string DefaultCulture { get; set; }
 
-        Theme PreferredTheme { get; set; }
+        Theme DefaultTheme { get; set; }
 
         void Save();
 

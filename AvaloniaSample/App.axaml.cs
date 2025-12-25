@@ -21,23 +21,8 @@ namespace AvaloniaSample
             base.Initialize();  // Required to initialize Prism.Avalonia - DO NOT REMOVE
         }
 
-        //public override void OnFrameworkInitializationCompleted()
-        //{
-        //    if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        //    {
-        //        desktop.MainWindow = new MainWindow
-        //        {
-        //            DataContext = new MainWindowViewModel(),
-        //        };
-        //    }
-
-        //    base.OnFrameworkInitializationCompleted();
-        //}
-
         protected override AvaloniaObject CreateShell()
         {
-            Console.WriteLine("CreateShell()");
-
             return Container.Resolve<MainWindow>();
         }
 
@@ -47,8 +32,6 @@ namespace AvaloniaSample
         /// <param name="containerRegistry"></param>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            Console.WriteLine("RegisterTypes()");
-
             // Services
             containerRegistry.RegisterSingleton<ISampleService, SampleService>();
             containerRegistry.RegisterSingleton<ISettings, Settings>();
@@ -66,9 +49,13 @@ namespace AvaloniaSample
             containerRegistry.RegisterDialog<UserEditView, UserEditViewModel>("UserEditView");
         }
 
+        /// <summary>
+        /// Register modules
+        /// </summary>
+        /// <param name="moduleCatalog"></param>
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            // Register modules
+            
             //// moduleCatalog.AddModule<DummyModule.DummyModule1>();
         }
     }

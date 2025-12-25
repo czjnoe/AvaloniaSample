@@ -18,13 +18,13 @@ namespace AvaloniaSample.ViewModels
         public string Greeting { get; } = "Welcome to Avalonia!";
 
         public SettingsViewModel SettingsViewModel { get; }
-        public  UserOperateViewModel UserOperateViewModel { get; }
+        public UserOperateViewModel UserOperateViewModel { get; }
 
         //public MainWindowViewModel(ISampleService sampleService, IDialogService dialogService)
-        public MainWindowViewModel(SettingsViewModel settingsViewModel)
+        public MainWindowViewModel(SettingsViewModel settingsViewModel, UserOperateViewModel userOperateViewModel)
         {
             SettingsViewModel = settingsViewModel;
-            UserOperateViewModel= new UserOperateViewModel();
+            UserOperateViewModel = userOperateViewModel;
             //_dialogService = dialogService;
             //_sampleService = sampleService;
         }

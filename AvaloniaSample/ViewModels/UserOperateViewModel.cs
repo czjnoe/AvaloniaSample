@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DryIoc;
+using Prism.Dialogs;
+using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,49 +11,61 @@ namespace AvaloniaSample.ViewModels
 {
     public partial class UserOperateViewModel : ViewModelBase
     {
-        private ObservableCollection<Person> _people;
+        private readonly IDialogService _dialogService;
 
-        public ObservableCollection<Person> People
-        {
-            get => _people;
-            set
-            {
-                _people = value;
-                OnPropertyChanged();
-            }
-        }
+        public Person SelectPeople { get; set; }
+
+        public ObservableCollection<Person> Peoples { get; }
 
         public DelegateCommand AddCommand { get; }
-        public DelegateCommand EditCommand { get; }
-        public DelegateCommand SaveCommand { get; }
+        public DelegateCommand<Person> EditCommand { get; }
+        public DelegateCommand<Person> DeleteCommand { get; }
 
-        public UserOperateViewModel()
+        public UserOperateViewModel(IDialogService dialogService)
         {
+            _dialogService = dialogService;
             var people = new List<Person>
             {
-                new Person("Neil", "Armstrong",  55),
-                new Person("Buzz", "Lightyear", 38),
-                new Person("James", "Kirk", 44)
+                new Person("Neil",  55),
+                new Person("Buzz", 38),
+                new Person("James", 44)
             };
-            People = new ObservableCollection<Person>(people);
+            Peoples = new ObservableCollection<Person>(people);
             AddCommand = new DelegateCommand(AddClick);
-            SaveCommand = new DelegateCommand(SaveClick);
-            EditCommand = new DelegateCommand(EditClick);
-        }
-
-        private void SaveClick()
-        {
-
+            EditCommand = new DelegateCommand<Person>(EditClick);
+            DeleteCommand = new DelegateCommand<Person>(DeleteClick);
         }
 
         private void AddClick()
         {
-            People.Add(new Person("New", "Person", 25));
+            Peoples.Add(new Person());
         }
 
-        private void EditClick()
+        private async void EditClick(Person data)
         {
+            var parameters = new DialogParameters
+            {
+                { "data", data }
+            };
+            var result = await _dialogService.ShowDialogAsync("UserEditView", parameters);
+            if (result.Result == ButtonResult.OK)
+            {
+                var editedData = result.Parameters.GetValue<Person>("data");
+                var index = Peoples.IndexOf(data);
+                if (index >= 0)
+                {
+                    Peoples[index] = editedData;
+                }
+            }
+        }
 
+        private void DeleteClick(Person data)
+        {
+            var index = Peoples.IndexOf(data);
+            if (index >= -1)
+            {
+                Peoples.RemoveAt(index);
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

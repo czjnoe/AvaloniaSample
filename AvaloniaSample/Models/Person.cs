@@ -8,63 +8,21 @@ using System.Threading.Tasks;
 
 namespace AvaloniaSample.Models
 {
-    public class Person : INotifyPropertyChanged
+    public class Person
     {
-        private string _firstName;
-        private string _lastName;
-        private int _ageInYears;
+        public string Name { get; set; }
 
-        public string FirstName
+        public int AgeInYears { get; set; }
+
+        public Person()
         {
-            get => _firstName;
-            set
-            {
-                if (_firstName != value)
-                {
-                    _firstName = value;
-                    OnPropertyChanged();
-                }
-            }
+
         }
 
-        public string LastName
+        public Person(string name, int ageInYears)
         {
-            get => _lastName;
-            set
-            {
-                if (_lastName != value)
-                {
-                    _lastName = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int AgeInYears
-        {
-            get => _ageInYears;
-            set
-            {
-                if (_ageInYears != value)
-                {
-                    _ageInYears = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public Person(string firstName, string lastName, int ageInYears)
-        {
-            FirstName = firstName;
-            LastName = lastName;
+            Name = name;
             AgeInYears = ageInYears;
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

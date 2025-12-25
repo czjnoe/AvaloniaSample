@@ -5,14 +5,21 @@
 								xmlns:viewModels="using:AvaloniaSample.ViewModels"
 								xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
 								xmlns:reactiveUi="http://reactiveui.net"
-								mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+								mc:Ignorable="d"  d:DesignWidth="800" d:DesignHeight="450" 
 								x:DataType="viewModels:AboutViewModel"
 								x:Class="AvaloniaSample.Views.AboutView"
 								>
 	<Grid ColumnDefinitions="*,*" RowDefinitions="*" Margin="30">
 		<StackPanel Grid.Row="0" Margin="20 0 0 0" Spacing="10" VerticalAlignment="Center">
-			<TextBlock Text="{Binding Version}" FontSize="20" />
-			<TextBlock Text="{x:Static viewModels:AboutViewModel.OSString}" FontSize="15" />
+			 <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Version:" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Version}" FontSize="20" VerticalAlignment="Center" />
+            </StackPanel>
+			
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="System:" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" />
+                <TextBlock Text="{x:Static viewModels:AboutViewModel.OSString}" FontSize="15" VerticalAlignment="Center" />
+            </StackPanel>
 
 			<Separator Margin="0 5 0 5" />
 			<StackPanel Orientation="Horizontal" Spacing="10">

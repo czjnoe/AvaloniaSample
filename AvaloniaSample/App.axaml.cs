@@ -41,22 +41,29 @@ namespace AvaloniaSample
             return Container.Resolve<MainWindow>();
         }
 
+        /// <summary>
+        /// Add Services and ViewModel registrations here
+        /// </summary>
+        /// <param name="containerRegistry"></param>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Add Services and ViewModel registrations here
-
             Console.WriteLine("RegisterTypes()");
 
             // Services
             containerRegistry.RegisterSingleton<ISampleService, SampleService>();
             containerRegistry.RegisterSingleton<ISettings, Settings>();
 
-            // Views - Region Navigation
-            //// containerRegistry.RegisterForNavigation<DashboardView, DashboardViewModel>();
+            // ViewModels
+            containerRegistry.Register<UserOperateViewModel>();
+            containerRegistry.Register<SettingsViewModel>();
+            containerRegistry.Register<MainWindowViewModel>();
+
+            // Views
+            containerRegistry.RegisterForNavigation<UserOperateView, UserOperateViewModel>();
 
             // Dialogs
-            //containerRegistry.RegisterDialog<WarningDialog, WarningDialogViewModel>("WarningDialog");
-            //// containerRegistry.RegisterDialogWindow<CustomDialogWindow>(nameof(CustomDialogWindow));
+            containerRegistry.RegisterDialog<WarningDialog, WarningDialogViewModel>("WarningDialog");
+            containerRegistry.RegisterDialog<UserEditView, UserEditViewModel>("UserEditView");
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
@@ -71,7 +78,7 @@ namespace AvaloniaSample
     //    public override void Initialize()
     //    {
     //        AvaloniaXamlLoader.Load(this);
-           
+
     //    }
 
     //    public override void OnFrameworkInitializationCompleted()

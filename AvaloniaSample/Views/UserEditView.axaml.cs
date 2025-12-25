@@ -9,8 +9,5 @@ public partial class UserEditView : UserControl
     public UserEditView()
     {
         InitializeComponent();
-
-        // ÒÆ³ıÄ¬ÈÏ±ß¿òÑùÊ½
-        this.Classes.Add("no-border");
     }
 }

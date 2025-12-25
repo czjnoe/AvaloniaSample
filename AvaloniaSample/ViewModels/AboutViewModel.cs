@@ -36,7 +36,7 @@ namespace AvaloniaSample.ViewModels
 
         private static void OpenSourceLinkClick()
         {
-            Process.Start(new ProcessStartInfo("") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://gitee.com/czjnoe/avalonia-sample.git") { UseShellExecute = true });
         }
     }
 }

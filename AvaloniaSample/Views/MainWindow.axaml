@@ -1,15 +1,16 @@
-<Window xmlns="https://github.com/avaloniaui"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:vm="using:AvaloniaSample.ViewModels"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:model="using:AvaloniaSample.Models"
-		xmlns:ext="clr-namespace:AvaloniaSample.Extensions"
-		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		x:Class="AvaloniaSample.Views.MainWindow"
-		x:DataType="vm:MainWindowViewModel"
-		Icon="/Assets/avalonia-logo.ico"
-		Title="AvaloniaSample" >
+﻿<Window xmlns="https://github.com/avaloniaui"
+			  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			  xmlns:vm="using:AvaloniaSample.ViewModels"
+			  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			  xmlns:u="https://irihi.tech/ursa"
+			  xmlns:model="using:AvaloniaSample.Models"
+			  xmlns:ext="clr-namespace:AvaloniaSample.Extensions"
+			  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			  x:Class="AvaloniaSample.Views.MainWindow"
+			  x:DataType="vm:MainWindowViewModel"
+			  Icon="/Assets/avalonia-logo.ico"
+			  Title="AvaloniaSample" >
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,

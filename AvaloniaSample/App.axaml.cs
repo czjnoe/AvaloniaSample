@@ -1,4 +1,4 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaSample.Services;
@@ -11,7 +11,7 @@ using Prism.Modularity;
 namespace AvaloniaSample
 {
     /// <summary>
-    /// ʹ�� Prism ��ܵ� Avalonia Ӧ�ó������ڵ㡣�ο���https://github.com/AvaloniaCommunity/Prism.Avalonia
+    /// 使用 Prism 框架的 Avalonia 应用程序的入口点。参考：https://github.com/AvaloniaCommunity/Prism.Avalonia
     /// </summary>
     public partial class App : PrismApplication
     {
@@ -61,6 +61,32 @@ namespace AvaloniaSample
         {
 
             //// moduleCatalog.AddModule<DummyModule.DummyModule1>();
+        }
+
+        /// <summary>
+        /// 退出程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitApplication_OnClicked(object? sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// 显示主窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenMainWindow_OnClicked(object? sender, EventArgs e)
+        {
+            if (ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                return;
+            }
+
+            desktop.MainWindow?.Show();
+            desktop.MainWindow?.Activate();
         }
     }
 

@@ -1,7 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Styling;
+using AvaloniaSample.Events;
 using Prism.DryIoc.Properties;
+using Prism.Events;
 using ReactiveUI;
 using Semi.Avalonia;
 using System;
@@ -16,6 +18,7 @@ namespace AvaloniaSample.ViewModels
     public partial class SettingsViewModel : ViewModelBase
     {
         public ISettings Settings { get; }
+        private readonly IEventAggregator _eventAggregator;
 
         public static string[] Languages => new[]
         {
@@ -57,11 +60,38 @@ namespace AvaloniaSample.ViewModels
             }
         }
 
-        public SettingsViewModel(ISettings settings)
+        private bool _hideTrayIconOnClose;
+
+        public bool HideTrayIconOnClose
+        {
+            get => _hideTrayIconOnClose;
+            set => this.RaiseAndSetIfChanged(ref _hideTrayIconOnClose, value);
+        }
+
+        private bool _needExitDialogOnClose;
+
+        public bool NeedExitDialogOnClose
+        {
+            get => _needExitDialogOnClose;
+            set => this.RaiseAndSetIfChanged(ref _needExitDialogOnClose, value);
+        }
+
+        private bool _autoOpenToolboxAtStartup;
+
+        public bool AutoOpenToolboxAtStartup
+        {
+            get => _autoOpenToolboxAtStartup;
+            set => this.RaiseAndSetIfChanged(ref _autoOpenToolboxAtStartup, value);
+        }
+
+        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator)
         {
             Settings = settings;
-
+            _eventAggregator = eventAggregator;
             Selected = settings.DefaultCulture;
+            HideTrayIconOnClose = settings.HideTrayIconOnClose;
+            NeedExitDialogOnClose = settings.NeedExitDialogOnClose;
+            AutoOpenToolboxAtStartup = settings.AutoOpenToolboxAtStartup;
 
             _theme = settings.DefaultTheme == Enums.Theme.Dark
                 ? ThemeVariant.Dark
@@ -79,7 +109,7 @@ namespace AvaloniaSample.ViewModels
 
                     settings.Apply();
                     settings.Save();
-                });
+                });//订阅 Selected 修改
 
             this.ObservableForProperty(x => x.Theme)
                 .Subscribe(
@@ -94,7 +124,28 @@ namespace AvaloniaSample.ViewModels
 
                         settings.Save();
                     }
-                );
+                );//订阅 Theme 修改
+
+            this.ObservableForProperty(x => x.AutoOpenToolboxAtStartup)
+               .Subscribe(o =>
+               {
+                   var value = o.GetValue();
+                   settings.AutoOpenToolboxAtStartup = value;
+                   settings.Save();
+               });//订阅 AutoOpenToolboxAtStartup 修改
+        }
+
+        public void ChangeHideTrayIconOnCloseHandler()
+        {
+            Settings.HideTrayIconOnClose = HideTrayIconOnClose;
+            Settings.Save();
+            _eventAggregator.GetEvent<ChangeApplicationStatusEvent>().Publish(HideTrayIconOnClose);
+        }
+
+        public void ChangeDisplayPromptWhenClosingHandler()
+        {
+            Settings.NeedExitDialogOnClose = NeedExitDialogOnClose;
+            Settings.Save();
         }
     }
 }

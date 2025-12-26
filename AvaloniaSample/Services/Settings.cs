@@ -1,8 +1,10 @@
-﻿namespace AvaloniaSample.Services
+﻿using AvaloniaSample.Helper;
+
+namespace AvaloniaSample.Services
 {
     public class Settings : ISettings
     {
-        public enum GamePlatform
+        public enum PlatformType
         {
             Linux,
             Windows,
@@ -13,89 +15,65 @@
 
         public bool PlatformChanged { get; private set; }
 
-        public string ManagedFolder { get; set; } = null!;
-
-        public GamePlatform Platform { get; set; } = GetDefaultPlatform();
+        public PlatformType Platform { get; set; } = GetDefaultPlatform();
 
         public string DefaultCulture { get; set; } = CultureInfo.CurrentUICulture.Name;
 
         public Theme DefaultTheme { get; set; } = Theme.Dark;
 
-        private static GamePlatform GetDefaultPlatform()
+        /// <summary>
+        /// 程序关闭是否显示对话框
+        /// </summary>
+        public bool NeedExitDialogOnClose { get; set; }
+
+        /// <summary>
+        /// 隐藏关闭时的图标
+        /// </summary>
+        public bool HideTrayIconOnClose { get; set; }
+
+        /// <summary>
+        /// 开机自动打开程序
+        /// </summary>
+        public bool AutoOpenToolboxAtStartup { get; set; }
+
+        private static PlatformType GetDefaultPlatform()
         {
             if (OperatingSystem.IsLinux())
-                return GamePlatform.Linux;
+                return PlatformType.Linux;
             if (OperatingSystem.IsWindows())
-                return GamePlatform.Windows;
+                return PlatformType.Windows;
             if (OperatingSystem.IsMacOS())
-                return GamePlatform.MacOS;
+                return PlatformType.MacOS;
 
             throw new NotSupportedException("Unknown platform!");
         }
 
         private static string ConfigPath => System.IO.Path.Combine
         (
-            Environment.GetFolderPath
-            (
-                Environment.SpecialFolder.ApplicationData,
-                Environment.SpecialFolderOption.Create
-            ),
-            "HKModInstaller",
-            "HKInstallerSettings.json"
+           AppDomain.CurrentDomain.BaseDirectory,
+            "appsettings.json"
         );
 
-        internal Settings(string path) : this() => ManagedFolder = path;
-
-        // Used by serializer.
-        public Settings() { }
-
-        public static string GetOrCreateDirPath()
-        {
-            string dirPath = System.IO.Path.GetDirectoryName(ConfigPath) ?? throw new InvalidOperationException();
-
-            // No-op if path already exists.
-            Directory.CreateDirectory(dirPath);
-
-            return dirPath;
-        }
-        public static Settings? Load()
+        public void Load()
         {
             if (!File.Exists(ConfigPath))
-                return null;
+                return;
 
-            Log.Debug("ConfigPath: File @ {ConfigPath} exists.", ConfigPath);
-
-            string content = File.ReadAllText(ConfigPath);
-
-            try
-            {
-                var res = JsonSerializer.Deserialize<Settings>(content);
-                return res;
-            }
-            // The JSON is malformed, act as if we don't have settings as a backup
-            catch (Exception e) when (e is JsonException or ArgumentNullException)
-            {
-                return null;
-            }
-        }
-
-        public static Settings Create(string path)
-        {
-            // Create from ManagedPath.
-            var settings = new Settings(path);
-            settings.Save();
-            return settings;
+            Appsetting config = AppSettingsHelper.GetConfig<Appsetting>();
+            HideTrayIconOnClose = config.HideTrayIconOnClose;
+            NeedExitDialogOnClose = config.NeedExitDialogOnClose;
+            AutoOpenToolboxAtStartup = config.AutoOpenToolboxAtStartup;
         }
 
         public void Save()
         {
-            string content = JsonSerializer.Serialize(this);
-
-            GetOrCreateDirPath();
-
-            string path = ConfigPath;
-
-            File.WriteAllText(path, content);
+            var config = AppSettingsHelper.GetConfig<Appsetting>();
+            config.DefaultCulture = DefaultCulture;
+            config.DefaultTheme = DefaultTheme;
+            config.NeedExitDialogOnClose = NeedExitDialogOnClose;
+            config.HideTrayIconOnClose = HideTrayIconOnClose;
+            config.AutoOpenToolboxAtStartup = AutoOpenToolboxAtStartup;
+            AppSettingsHelper.Save(config);
         }
 
         public void Apply()

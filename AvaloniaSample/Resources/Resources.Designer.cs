@@ -61,6 +61,69 @@ namespace AvaloniaSample.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Auto Open Toolbox At Startup 的本地化字符串。
+        /// </summary>
+        internal static string AutoOpenToolboxAtStartup {
+            get {
+                return ResourceManager.GetString("AutoOpenToolboxAtStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Display Prompt When Closing 的本地化字符串。
+        /// </summary>
+        internal static string DisplayPromptWhenClosing {
+            get {
+                return ResourceManager.GetString("DisplayPromptWhenClosing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Exit 的本地化字符串。
+        /// </summary>
+        internal static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Find In TrayIcon 的本地化字符串。
+        /// </summary>
+        internal static string FindInTrayIcon {
+            get {
+                return ResourceManager.GetString("FindInTrayIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Hide Tray Icon On Close 的本地化字符串。
+        /// </summary>
+        internal static string HideTrayIconOnClose {
+            get {
+                return ResourceManager.GetString("HideTrayIconOnClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 No More Prompts 的本地化字符串。
+        /// </summary>
+        internal static string NoMorePrompts {
+            get {
+                return ResourceManager.GetString("NoMorePrompts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Are you sure you want to exit? 的本地化字符串。
+        /// </summary>
+        internal static string SureExit {
+            get {
+                return ResourceManager.GetString("SureExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Language 的本地化字符串。
         /// </summary>
         internal static string Tab_About_Language {
@@ -102,6 +165,33 @@ namespace AvaloniaSample.Resources {
         internal static string Tab_User_Title {
             get {
                 return ResourceManager.GetString("Tab_User_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Avalonia Test 的本地化字符串。
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Off 的本地化字符串。
+        /// </summary>
+        internal static string TurnOff {
+            get {
+                return ResourceManager.GetString("TurnOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 On 的本地化字符串。
+        /// </summary>
+        internal static string TurnOn {
+            get {
+                return ResourceManager.GetString("TurnOn", resourceCulture);
             }
         }
     }

@@ -12,11 +12,17 @@ namespace AvaloniaSample.Interfaces
     {
         bool PlatformChanged { get; }
 
-        string ManagedFolder { get; set; }
-
         string DefaultCulture { get; set; }
 
         Theme DefaultTheme { get; set; }
+
+        bool NeedExitDialogOnClose { get; set; }
+
+        bool HideTrayIconOnClose { get; set; }
+
+        bool AutoOpenToolboxAtStartup { get; set; }
+
+        void Load();
 
         void Save();
 

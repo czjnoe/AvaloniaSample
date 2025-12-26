@@ -1,4 +1,4 @@
-<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:SettingsViewModel" xmlns="https://github.com/avaloniaui"
+﻿<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:SettingsViewModel" xmlns="https://github.com/avaloniaui"
 								xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 								xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 								xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,7 +15,7 @@
 			</Style>
 		</StackPanel.Styles>
 
-		<Grid ColumnDefinitions="Auto,200,*" RowDefinitions="*,*,*" Margin="20">
+		<Grid ColumnDefinitions="200,300" RowDefinitions="Auto,Auto,50,50,50,50" Margin="20">
 			<Grid.Styles>
 				<!--<Style Selector=":is(Control)">
 				<Setter Property="Margin" Value="0 3 0 3" />
@@ -35,25 +35,25 @@
 			</TextBlock>
 
 			<ComboBox
-			Grid.Row="0"
-			Grid.Column="1"
-			HorizontalAlignment="Stretch"
-			Margin="0 0 0 0"
-			SelectedItem="{Binding Selected}"
-			ItemsSource="{Binding Languages}"
-			PlaceholderText="Locale" />
+			Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0 0 0 0" SelectedItem="{Binding Selected}" ItemsSource="{Binding Languages}" PlaceholderText="Locale" />
 
 			<TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="{ext:Localize Tab_About_Theme}">
 				:
 			</TextBlock>
 
-			<ComboBox
-			Grid.Column="1"
-			Grid.Row="2"
-			HorizontalAlignment="Stretch"
-			SelectedItem="{Binding Theme}"
-			ItemsSource="{Binding Themes}"
-			/>
+			<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" SelectedItem="{Binding Theme}" ItemsSource="{Binding Themes}"
+					  />
+
+
+			<TextBlock Grid.Row="3" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Center" Text="{ext:Localize AutoOpenToolboxAtStartup}" />
+			<ToggleSwitch Grid.Row="3" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" />
+
+			<TextBlock Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Text="{ext:Localize HideTrayIconOnClose}">
+			</TextBlock>
+			<ToggleSwitch Grid.Row="4" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding HideTrayIconOnClose}" Command="{Binding ChangeHideTrayIconOnCloseHandler}" />
+
+			<TextBlock Grid.Row="5" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Center" Text="{ext:Localize DisplayPromptWhenClosing}" />
+			<ToggleSwitch Grid.Row="5" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding NeedExitDialogOnClose}" Command="{Binding ChangeDisplayPromptWhenClosingHandler}" />
 		</Grid>
 	</StackPanel>
 </reactiveUi:ReactiveUserControl>

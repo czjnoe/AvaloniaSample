@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace AvaloniaSample.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBase
     {
         public SettingsViewModel SettingsViewModel { get; }
         public UserOperateViewModel UserOperateViewModel { get; }

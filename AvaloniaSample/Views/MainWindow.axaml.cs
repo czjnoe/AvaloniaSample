@@ -1,4 +1,6 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using AvaloniaSample.Events;
 using AvaloniaSample.Models;
 using AvaloniaSample.ViewModels;
@@ -101,6 +103,39 @@ namespace AvaloniaSample.Views
                 return;
             }
             icon.IsVisible = value;
+        }
+
+        /// <summary>
+        /// 打开设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSettingsClick(object? sender, RoutedEventArgs e)
+        {
+            SettingsTab.IsSelected = true;
+        }
+
+        /// <summary>
+        /// 显示帮助菜单或对话框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnHelpClick(object? sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        /// <summary>
+        /// 标题栏鼠标按下移动事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTitleBarPointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            {
+                BeginMoveDrag(e);
+            }
         }
     }
 }

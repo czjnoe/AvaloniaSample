@@ -1,16 +1,22 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
-			  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			  xmlns:vm="using:AvaloniaSample.ViewModels"
-			  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			  xmlns:u="https://irihi.tech/ursa"
-			  xmlns:model="using:AvaloniaSample.Models"
-			  xmlns:ext="clr-namespace:AvaloniaSample.Extensions"
-			  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			  x:Class="AvaloniaSample.Views.MainWindow"
-			  x:DataType="vm:MainWindowViewModel"
-			  Icon="/Assets/avalonia-logo.ico"
-			  Title="AvaloniaSample" >
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:AvaloniaSample.ViewModels"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:u="https://irihi.tech/ursa"
+		xmlns:model="using:AvaloniaSample.Models"
+		xmlns:ext="clr-namespace:AvaloniaSample.Extensions"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="AvaloniaSample.Views.MainWindow"
+		x:DataType="vm:MainWindowViewModel"
+		Icon="/Assets/avalonia-logo.ico"
+		Title="AvaloniaSample"
+		Width="650" 
+		Height="500"
+		ExtendClientAreaToDecorationsHint="True"
+		ExtendClientAreaChromeHints="PreferSystemChrome"
+		ExtendClientAreaTitleBarHeightHint="40"
+		>
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
@@ -18,15 +24,54 @@
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
 
-	<TabControl TabStripPlacement="Top" HorizontalAlignment="Stretch">
-		<TabItem Header="{ext:Localize Tab_User_Title}" Content="{Binding UserOperateViewModel}">
-			<!--<vm:UserOperateViewModel />-->
-		</TabItem>
+	<Panel>
+		<!-- 自定义标题栏区域 -->
+		<Grid Height="40" VerticalAlignment="Top" Background="Transparent">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>  <!-- 左侧图标标题 -->
+				<ColumnDefinition Width="*"/>     <!-- 中间空白 -->
+				<ColumnDefinition Width="Auto"/>  <!-- 右侧按钮 -->
+				<ColumnDefinition Width="140"/>   <!-- 系统按钮预留空间 -->
+			</Grid.ColumnDefinitions>
 
-		<TabItem x:Name="SettingsTab" Header="{ext:Localize Tab_Setting_Title}" Content="{Binding SettingsViewModel, TargetNullValue=''}" />
+			<!-- 左侧：图标和标题（可拖拽） -->
+			<StackPanel Grid.Column="0"
+						Orientation="Horizontal"
+						Spacing="10"
+						Margin="10,0"
+						PointerPressed="OnTitleBarPointerPressed">
+				<Image Source="/Assets/avalonia-logo.ico" Width="20" Height="20"/>
+				<TextBlock Text="{ext:Localize Title}" VerticalAlignment="Center" FontSize="14"/>
+			</StackPanel>
 
-		<TabItem Header="{ext:Localize Tab_About_Title}">
-			<vm:AboutViewModel />
-		</TabItem>
-	</TabControl>
+			<!-- 中间空白区域（可拖拽） -->
+			<Border Grid.Column="1"
+					Background="Transparent"
+					PointerPressed="OnTitleBarPointerPressed"/>
+
+			<!-- 右侧：自定义按钮 -->
+			<StackPanel Grid.Column="2" Orientation="Horizontal">
+				<Button Content="⚙" ToolTip.Tip="设置"
+						Width="40" Height="40"
+						Background="Transparent"
+						BorderThickness="0"
+						Click="OnSettingsClick" />
+				<Button Content="?" ToolTip.Tip="帮助"
+						Width="40" Height="40"
+						Background="Transparent"
+						BorderThickness="0"
+						Click="OnHelpClick" />
+			</StackPanel>
+		</Grid>
+
+
+		<!-- 主内容区域 -->
+		<TabControl Margin="0,40,0,0" TabStripPlacement="Top" HorizontalAlignment="Stretch">
+			<TabItem Header="{ext:Localize Tab_User_Title}" Content="{Binding UserOperateViewModel}"/>
+			<TabItem x:Name="SettingsTab" Header="{ext:Localize Tab_Setting_Title}" Content="{Binding SettingsViewModel, TargetNullValue=''}"/>
+			<TabItem Header="{ext:Localize Tab_About_Title}">
+				<vm:AboutViewModel />
+			</TabItem>
+		</TabControl>
+	</Panel>
 </Window>

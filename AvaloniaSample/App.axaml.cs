@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AvaloniaSample.Services;
@@ -7,6 +8,7 @@ using AvaloniaSample.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
+using System;
 
 namespace AvaloniaSample
 {
@@ -87,6 +89,18 @@ namespace AvaloniaSample
 
             desktop.MainWindow?.Show();
             desktop.MainWindow?.Activate();
+        }
+
+        private async void OpenGithub_OnClicked(object? sender, EventArgs e)
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var top = TopLevel.GetTopLevel(desktop.MainWindow);
+                if (top is null) return;
+                var launcher = top.Launcher;
+                await launcher.LaunchUriAsync(new Uri("https://gitee.com/czjnoe/avalonia-sample.git"));
+
+            }
         }
     }
 

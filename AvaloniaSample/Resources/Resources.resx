@@ -135,6 +135,9 @@
   <data name="NoMorePrompts" xml:space="preserve">
     <value>No More Prompts</value>
   </data>
+  <data name="ShowMainWindow" xml:space="preserve">
+    <value>Show Main Window</value>
+  </data>
   <data name="SureExit" xml:space="preserve">
     <value>Are you sure you want to exit?</value>
   </data>

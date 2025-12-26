@@ -135,6 +135,9 @@
   <data name="NoMorePrompts" xml:space="preserve">
     <value>不再提示</value>
   </data>
+  <data name="ShowMainWindow" xml:space="preserve">
+    <value>显示主窗口</value>
+  </data>
   <data name="SureExit" xml:space="preserve">
     <value>确认退出？</value>
   </data>

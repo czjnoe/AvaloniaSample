@@ -25,9 +25,9 @@
 			Icon="/Assets/avalonia-logo.ico">
 				<TrayIcon.Menu>
 					<NativeMenu>
-						<NativeMenuItem Header="测试" />
+						<NativeMenuItem Header="Git" Click="OpenGithub_OnClicked" />
 						<NativeMenuItemSeparator />
-						<NativeMenuItem Header="{ext:Localize Title}" Click="OpenMainWindow_OnClicked" />
+						<NativeMenuItem Header="{ext:Localize ShowMainWindow}" Click="OpenMainWindow_OnClicked" />
 						<NativeMenuItemSeparator />
 						<NativeMenuItem Header="{ext:Localize Exit}" Click="ExitApplication_OnClicked" />
 					</NativeMenu>

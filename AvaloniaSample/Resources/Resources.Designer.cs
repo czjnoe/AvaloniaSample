@@ -115,6 +115,15 @@ namespace AvaloniaSample.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Show Main Window 的本地化字符串。
+        /// </summary>
+        internal static string ShowMainWindow {
+            get {
+                return ResourceManager.GetString("ShowMainWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Are you sure you want to exit? 的本地化字符串。
         /// </summary>
         internal static string SureExit {

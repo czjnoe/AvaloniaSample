@@ -51,7 +51,7 @@
 
 			<!-- 右侧：自定义按钮 -->
 			<StackPanel Grid.Column="2" Orientation="Horizontal">
-				<Button Content="⚙" ToolTip.Tip="设置"
+				<Button Content="⚙" VerticalContentAlignment="Center" ToolTip.Tip="设置"
 						Width="40" Height="40"
 						Background="Transparent"
 						BorderThickness="0"
@@ -68,7 +68,9 @@
 		<!-- 主内容区域 -->
 		<TabControl Margin="0,40,0,0" TabStripPlacement="Top" HorizontalAlignment="Stretch">
 			<TabItem Header="{ext:Localize Tab_User_Title}" Content="{Binding UserOperateViewModel}"/>
+
 			<TabItem x:Name="SettingsTab" Header="{ext:Localize Tab_Setting_Title}" Content="{Binding SettingsViewModel, TargetNullValue=''}"/>
+
 			<TabItem Header="{ext:Localize Tab_About_Title}">
 				<vm:AboutViewModel />
 			</TabItem>

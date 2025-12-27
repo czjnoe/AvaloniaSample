@@ -25,7 +25,7 @@ namespace AvaloniaSample.Services
 
         public string DefaultCulture { get; set; } = CultureInfo.CurrentUICulture.Name;
 
-        public Theme DefaultTheme { get; set; } = Theme.Dark;
+        public int DefaultTheme { get; set; }
 
         /// <summary>
         /// 程序关闭是否显示对话框
@@ -63,6 +63,8 @@ namespace AvaloniaSample.Services
 
         public double CurrentFontSize { get; set; }
 
+        public bool Topmost { get; set; }
+
         private static string ConfigPath => System.IO.Path.Combine
         (
            AppDomain.CurrentDomain.BaseDirectory,
@@ -75,11 +77,14 @@ namespace AvaloniaSample.Services
                 return;
 
             Appsetting config = AppSettingsHelper.GetConfig<Appsetting>();
+            DefaultCulture = config.DefaultCulture;
+            DefaultTheme = config.DefaultTheme;
             HideTrayIconOnClose = config.HideTrayIconOnClose;
             NeedExitDialogOnClose = config.NeedExitDialogOnClose;
             AutoStartEnabled = _autoStartService.IsEnabled();
             CurrentFontFamily = string.IsNullOrEmpty(config.Font) ? ((FontFamily)Application.Current!.Resources[GlobalConst.FontFamilyKey]!).Name : config.Font;
             CurrentFontSize = config.FontSize ?? (double)Application.Current!.Resources[GlobalConst.FontSizeKey]!;
+            Topmost = config.Topmost;
         }
 
         public void Save()
@@ -91,17 +96,13 @@ namespace AvaloniaSample.Services
             config.HideTrayIconOnClose = HideTrayIconOnClose;
             config.FontSize = CurrentFontSize;
             config.Font = CurrentFontFamily;
+            config.Topmost = Topmost;
             AppSettingsHelper.Save(config);
         }
 
-        public void Apply()
+        public void SetLanguage()
         {
             Debug.Assert(Application.Current is not null);
-
-            Application.Current.RequestedThemeVariant = DefaultTheme == Theme.Dark
-                ? ThemeVariant.Dark
-                : ThemeVariant.Light;
-
             LocalizeExtension.ChangeLanguage(new CultureInfo(DefaultCulture));
         }
 
@@ -115,11 +116,13 @@ namespace AvaloniaSample.Services
 
         public void SetFontFamily(FontFamily fontFamily)
         {
+            CurrentFontFamily = fontFamily.Name;
             Application.Current!.Resources[GlobalConst.FontFamilyKey] = fontFamily;
         }
 
         public void SetFontSize(double fontSize)
         {
+            CurrentFontSize = fontSize;
             Application.Current!.Resources[GlobalConst.FontSizeKey] = fontSize;
         }
     }

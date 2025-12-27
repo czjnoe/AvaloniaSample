@@ -1,8 +1,10 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
 using Avalonia.Styling;
 using AvaloniaSample.Events;
+using AvaloniaSample.Interfaces;
 using Prism.DryIoc.Properties;
 using Prism.Events;
 using ReactiveUI;
@@ -113,21 +115,23 @@ namespace AvaloniaSample.ViewModels
             }
         }
 
+        private bool currentTopmost;
+        public bool CurrentTopmost
+        {
+            get => currentTopmost;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref currentTopmost, value);
+            }
+        }
+
         public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, IAutoStartService autoStartService)
         {
-            _settings = settings;
             _eventAggregator = eventAggregator;
             _autoStartService = autoStartService;
-            SelectedLanguage = settings.DefaultCulture;
-            HideTrayIconOnClose = settings.HideTrayIconOnClose;
-            NeedExitDialogOnClose = settings.NeedExitDialogOnClose;
-            AutoStartEnabled = settings.AutoStartEnabled;
-            SelectedFont = Fonts.FirstOrDefault(s => s.FontFamily.Name == settings.CurrentFontFamily);
-            SelectFontSize = settings.CurrentFontSize;
-            _theme = settings.DefaultTheme == Enums.Theme.Dark
-                ? ThemeVariant.Dark
-                : ThemeVariant.Light;
-
+            var setting = ContainerLocator.Container.Resolve<ISettings>();//容器获取对象
+            _settings = settings;
+         
             this.ObservableForProperty(x => x.SelectedLanguage)
                 .Subscribe(o =>
                 {
@@ -138,7 +142,7 @@ namespace AvaloniaSample.ViewModels
 
                     settings.DefaultCulture = item;
 
-                    settings.Apply();
+                    settings.SetLanguage();
                     settings.Save();
                 });//订阅 SelectedLanguage 修改
 
@@ -147,12 +151,8 @@ namespace AvaloniaSample.ViewModels
                     o =>
                     {
                         var t = o.GetValue();
-
                         Application.Current!.RequestedThemeVariant = t;
-                        settings.DefaultTheme = t == ThemeVariant.Dark
-                            ? AvaloniaSample.Enums.Theme.Dark
-                            : AvaloniaSample.Enums.Theme.Light;
-
+                        settings.DefaultTheme = Themes.ToList().IndexOf(t);
                         settings.Save();
                     }
                 );//订阅 Theme 修改
@@ -180,6 +180,21 @@ namespace AvaloniaSample.ViewModels
                 settings.SetFontSize(value);
                 settings.Save();
             });//订阅 SelectFontSize 修改
+
+            Init();
+        }
+
+        private void Init()
+        {
+            _settings.Load();
+            SelectedLanguage = _settings.DefaultCulture;
+            HideTrayIconOnClose = _settings.HideTrayIconOnClose;
+            NeedExitDialogOnClose = _settings.NeedExitDialogOnClose;
+            AutoStartEnabled = _settings.AutoStartEnabled;
+            SelectedFont = Fonts.FirstOrDefault(s => s.FontFamily.Name == _settings.CurrentFontFamily);
+            SelectFontSize = _settings.CurrentFontSize;
+            Theme = Themes[(int)_settings.DefaultTheme];
+            CurrentTopmost = _settings.Topmost;
         }
 
         public void ChangeHideTrayIconOnCloseHandler()
@@ -192,6 +207,13 @@ namespace AvaloniaSample.ViewModels
         public void ChangeDisplayPromptWhenClosingHandler()
         {
             _settings.NeedExitDialogOnClose = NeedExitDialogOnClose;
+            _settings.Save();
+        }
+
+        public void ChangeWindowTopmostHandler()
+        {
+            _eventAggregator.GetEvent<ChangeWindowTopmostEvent>().Publish(CurrentTopmost);
+            _settings.Topmost = CurrentTopmost;
             _settings.Save();
         }
     }

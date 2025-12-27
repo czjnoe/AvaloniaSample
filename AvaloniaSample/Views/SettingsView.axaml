@@ -15,7 +15,7 @@
 			</Style>
 		</StackPanel.Styles>
 
-		<Grid ColumnDefinitions="200,300" RowDefinitions="Auto,Auto,50,50,50,50,50,50" Margin="20">
+		<Grid ColumnDefinitions="200,300" RowDefinitions="Auto,Auto,50,50,50,50,50,50,50" Margin="20">
 			<Grid.Styles>
 				<!--<Style Selector=":is(Control)">
 				<Setter Property="Margin" Value="0 3 0 3" />
@@ -72,6 +72,10 @@
 
 			<TextBlock Grid.Row="7" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Center" Text="{ext:Localize DisplayPromptWhenClosing}" />
 			<ToggleSwitch Grid.Row="7" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding NeedExitDialogOnClose}" Command="{Binding ChangeDisplayPromptWhenClosingHandler}" />
+
+			<TextBlock Grid.Row="8" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Text="{ext:Localize Topmost}">
+			</TextBlock>
+			<ToggleSwitch Grid.Row="8" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding CurrentTopmost}" Command="{Binding ChangeWindowTopmostHandler}" />
 		</Grid>
 	</StackPanel>
 </reactiveUi:ReactiveUserControl>

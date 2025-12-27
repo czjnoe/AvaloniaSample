@@ -16,6 +16,7 @@
 		ExtendClientAreaToDecorationsHint="True"
 		ExtendClientAreaChromeHints="PreferSystemChrome"
 		ExtendClientAreaTitleBarHeightHint="40"
+		WindowStartupLocation="CenterScreen"
 		>
 
 	<Design.DataContext>

@@ -205,6 +205,15 @@ namespace AvaloniaSample.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Topmost 的本地化字符串。
+        /// </summary>
+        internal static string Topmost {
+            get {
+                return ResourceManager.GetString("Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Off 的本地化字符串。
         /// </summary>
         internal static string TurnOff {

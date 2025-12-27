@@ -16,7 +16,7 @@ namespace AvaloniaSample
         /// <summary>
         /// 主题
         /// </summary>
-        public Theme DefaultTheme { get; set; } = Theme.Dark;
+        public int DefaultTheme { get; set; }
 
         /// <summary>
         /// 程序关闭是否显示对话框
@@ -31,5 +31,7 @@ namespace AvaloniaSample
         public string Font { get; set; }
 
         public double? FontSize { get; set; }
+
+        public bool Topmost { get; set; }
     }
 }

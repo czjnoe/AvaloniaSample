@@ -15,7 +15,7 @@ namespace AvaloniaSample.Interfaces
 
         string DefaultCulture { get; set; }
 
-        Theme DefaultTheme { get; set; }
+        int DefaultTheme { get; set; }
 
         bool NeedExitDialogOnClose { get; set; }
 
@@ -27,11 +27,13 @@ namespace AvaloniaSample.Interfaces
 
         double CurrentFontSize { get; set; }
 
+        bool Topmost { get; set; }
+
         void Load();
 
         void Save();
 
-        void Apply();
+        void SetLanguage();
 
         void ChangeAutoStart();
 

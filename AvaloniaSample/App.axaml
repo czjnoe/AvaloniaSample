@@ -3,7 +3,7 @@
 			 x:Class="AvaloniaSample.App"
 			 xmlns:local="using:AvaloniaSample"
 			 xmlns:semi="https://irihi.tech/semi"
-             xmlns:system="using:System"
+			 xmlns:system="using:System"
 			 xmlns:u-semi="https://irihi.tech/ursa/themes/semi"
 			 xmlns:ext="clr-namespace:AvaloniaSample.Extensions"
 			 RequestedThemeVariant="Dark">
@@ -16,8 +16,8 @@
 	<Application.Resources>
 		<!-- 当前全局字体 -->
 		<FontFamily x:Key="AppFontFamily">Microsoft YaHei</FontFamily>
-		 <!-- 全局字体大小 -->
-        <system:Double x:Key="AppFontSize">15</system:Double>
+		<!-- 全局字体大小 -->
+		<system:Double x:Key="AppFontSize">15</system:Double>
 	</Application.Resources>
 
 	<Application.Styles>
@@ -30,7 +30,7 @@
 		<Style Selector=":is(Control)">
 			<Setter Property="TextElement.FontFamily"
 					Value="{DynamicResource AppFontFamily}" />
-			 <Setter Property="TextElement.FontSize" Value="{DynamicResource AppFontSize}" />
+			<Setter Property="TextElement.FontSize" Value="{DynamicResource AppFontSize}" />
 		</Style>
 
 	</Application.Styles>

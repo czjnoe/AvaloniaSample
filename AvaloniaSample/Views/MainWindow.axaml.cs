@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using AvaloniaSample.Events;
@@ -93,6 +94,9 @@ namespace AvaloniaSample.Views
             _settins.Load();
             _eventAggregator.GetEvent<ChangeApplicationStatusEvent>()
                 .Subscribe(ChangeApplicationStatus);
+            _eventAggregator.GetEvent<ChangeWindowTopmostEvent>()
+               .Subscribe(SetWindowTopmost);
+            SetWindowTopmost(_settins.Topmost);
         }
 
         private void ChangeApplicationStatus(bool value)
@@ -103,6 +107,11 @@ namespace AvaloniaSample.Views
                 return;
             }
             icon.IsVisible = value;
+        }
+
+        private void SetWindowTopmost(bool value)
+        {
+            this.Topmost = value;
         }
 
         /// <summary>
@@ -122,7 +131,7 @@ namespace AvaloniaSample.Views
         /// <param name="e"></param>
         private void OnHelpClick(object? sender, RoutedEventArgs e)
         {
-           
+
         }
 
         /// <summary>

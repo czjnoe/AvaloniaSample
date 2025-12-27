@@ -15,19 +15,19 @@
 			</Style>
 		</StackPanel.Styles>
 
-		<Grid ColumnDefinitions="200,300" RowDefinitions="Auto,Auto,50,50,50,50,50,50,50" Margin="20">
+		<Grid ColumnDefinitions="200,300" RowDefinitions="50,50,50,50,50,50,50,50" Margin="20">
 			<Grid.Styles>
 				<!--<Style Selector=":is(Control)">
 				<Setter Property="Margin" Value="0 3 0 3" />
 				<Setter Property="VerticalAlignment" Value="Center" />
 				</Style>-->
-				<Style Selector="TextBlock">
+				<!--<Style Selector="TextBlock">
 					<Setter Property="Margin" Value="0 0 10 0" />
 					<Setter Property="VerticalAlignment" Value="Center" />
 				</Style>
 				<Style Selector="ComboBox">
 					<Setter Property="Margin" Value="0 5 0 5" />
-				</Style>
+				</Style>-->
 			</Grid.Styles>
 
 			<TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="{ext:Localize Tab_About_Language}">
@@ -37,18 +37,18 @@
 			<ComboBox
 			Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0 0 0 0" SelectedItem="{Binding SelectedLanguage}" ItemsSource="{Binding Languages}" PlaceholderText="Locale" />
 
-			<TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="{ext:Localize Tab_About_Theme}">
+			<TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="{ext:Localize Tab_About_Theme}">
 				:
 			</TextBlock>
 
-			<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" SelectedItem="{Binding Theme}" ItemsSource="{Binding Themes}">
+			<ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" SelectedItem="{Binding Theme}" ItemsSource="{Binding Themes}">
 			</ComboBox>
 
-			<TextBlock Grid.Column="0" Grid.Row="3" FontWeight="Bold" Text="{ext:Localize Font}">
+			<TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="{ext:Localize Font}">
 				:
 			</TextBlock>
 
-			<ComboBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedFont}"  ItemsSource="{Binding Fonts}">
+			<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedFont}"  ItemsSource="{Binding Fonts}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Name}" />
@@ -56,26 +56,26 @@
 				</ComboBox.ItemTemplate>
 			</ComboBox>
 
-			<ComboBox Grid.Column="1" Grid.Row="4" MaxDropDownHeight="200" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectFontSize}" ItemsSource="{Binding FontSizes}">
+			<ComboBox Grid.Column="1" Grid.Row="3" MaxDropDownHeight="200" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectFontSize}" ItemsSource="{Binding FontSizes}">
 			</ComboBox>
 
-			<TextBlock Grid.Column="0" Grid.Row="4" FontWeight="Bold" Text="{ext:Localize FontSize}">
+			<TextBlock Grid.Column="0" Grid.Row="3" FontWeight="Bold" Text="{ext:Localize FontSize}">
 				:
 			</TextBlock>
 
-			<TextBlock Grid.Row="5" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Center" Text="{ext:Localize AutoStartEnabled}" />
-			<ToggleSwitch Grid.Row="5" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" />
+			<TextBlock Grid.Row="4" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Center" Text="{ext:Localize AutoStartEnabled}" />
+			<ToggleSwitch Grid.Row="4" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" />
 
-			<TextBlock Grid.Row="6" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Text="{ext:Localize HideTrayIconOnClose}">
+			<TextBlock Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Text="{ext:Localize HideTrayIconOnClose}">
 			</TextBlock>
-			<ToggleSwitch Grid.Row="6" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding HideTrayIconOnClose}" Command="{Binding ChangeHideTrayIconOnCloseHandler}" />
+			<ToggleSwitch Grid.Row="5" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding HideTrayIconOnClose}" Command="{Binding ChangeHideTrayIconOnCloseHandler}" />
 
-			<TextBlock Grid.Row="7" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Center" Text="{ext:Localize DisplayPromptWhenClosing}" />
-			<ToggleSwitch Grid.Row="7" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding NeedExitDialogOnClose}" Command="{Binding ChangeDisplayPromptWhenClosingHandler}" />
+			<TextBlock Grid.Row="6" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Center" Text="{ext:Localize DisplayPromptWhenClosing}" />
+			<ToggleSwitch Grid.Row="6" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding NeedExitDialogOnClose}" Command="{Binding ChangeDisplayPromptWhenClosingHandler}" />
 
-			<TextBlock Grid.Row="8" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Text="{ext:Localize Topmost}">
+			<TextBlock Grid.Row="7" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Text="{ext:Localize Topmost}">
 			</TextBlock>
-			<ToggleSwitch Grid.Row="8" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding CurrentTopmost}" Command="{Binding ChangeWindowTopmostHandler}" />
+			<ToggleSwitch Grid.Row="7" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding CurrentTopmost}" Command="{Binding ChangeWindowTopmostHandler}" />
 		</Grid>
 	</StackPanel>
 </reactiveUi:ReactiveUserControl>

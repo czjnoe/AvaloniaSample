@@ -61,11 +61,11 @@ namespace AvaloniaSample.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Auto Open Toolbox At Startup 的本地化字符串。
+        ///   查找类似 Auto Start  的本地化字符串。
         /// </summary>
-        internal static string AutoOpenToolboxAtStartup {
+        internal static string AutoStartEnabled {
             get {
-                return ResourceManager.GetString("AutoOpenToolboxAtStartup", resourceCulture);
+                return ResourceManager.GetString("AutoStartEnabled", resourceCulture);
             }
         }
         
@@ -93,6 +93,15 @@ namespace AvaloniaSample.Resources {
         internal static string FindInTrayIcon {
             get {
                 return ResourceManager.GetString("FindInTrayIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Font 的本地化字符串。
+        /// </summary>
+        internal static string Font {
+            get {
+                return ResourceManager.GetString("Font", resourceCulture);
             }
         }
         

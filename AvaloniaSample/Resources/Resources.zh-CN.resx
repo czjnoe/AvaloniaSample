@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoOpenToolboxAtStartup" xml:space="preserve">
-    <value>开机时自动打开工具箱</value>
+  <data name="AutoStartEnabled" xml:space="preserve">
+    <value>开机自启动</value>
   </data>
   <data name="DisplayPromptWhenClosing" xml:space="preserve">
     <value>关闭窗体时显示提示</value>
@@ -128,6 +128,9 @@
   </data>
   <data name="FindInTrayIcon" xml:space="preserve">
     <value>你可以在托盘图标上找到我！</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>字体</value>
   </data>
   <data name="HideTrayIconOnClose" xml:space="preserve">
     <value>关闭窗体时隐藏托盘图标</value>

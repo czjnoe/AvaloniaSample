@@ -40,6 +40,7 @@ namespace AvaloniaSample
             // Services
             containerRegistry.RegisterSingleton<ISampleService, SampleService>();
             containerRegistry.RegisterSingleton<ISettings, Settings>();
+            containerRegistry.RegisterInstance(AutoStartServiceFactory.Create("AvaloniaSample"));
 
             // ViewModels
             containerRegistry.Register<UserOperateViewModel>();

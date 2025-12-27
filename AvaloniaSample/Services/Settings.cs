@@ -1,9 +1,14 @@
-﻿using AvaloniaSample.Helper;
+﻿using Avalonia.Media;
+using AvaloniaSample.Helper;
+using AvaloniaSample.Interfaces;
+using System.Globalization;
 
 namespace AvaloniaSample.Services
 {
     public class Settings : ISettings
     {
+        private readonly IAutoStartService _autoStartService;
+
         public enum PlatformType
         {
             Linux,
@@ -34,7 +39,12 @@ namespace AvaloniaSample.Services
         /// <summary>
         /// 开机自动打开程序
         /// </summary>
-        public bool AutoOpenToolboxAtStartup { get; set; }
+        public bool AutoStartEnabled { get; set; }
+
+        public Settings(IAutoStartService autoStartService)
+        {
+            _autoStartService = autoStartService;
+        }
 
         private static PlatformType GetDefaultPlatform()
         {
@@ -47,6 +57,8 @@ namespace AvaloniaSample.Services
 
             throw new NotSupportedException("Unknown platform!");
         }
+
+        public string CurrentFontFamily { get; set; }
 
         private static string ConfigPath => System.IO.Path.Combine
         (
@@ -62,7 +74,8 @@ namespace AvaloniaSample.Services
             Appsetting config = AppSettingsHelper.GetConfig<Appsetting>();
             HideTrayIconOnClose = config.HideTrayIconOnClose;
             NeedExitDialogOnClose = config.NeedExitDialogOnClose;
-            AutoOpenToolboxAtStartup = config.AutoOpenToolboxAtStartup;
+            AutoStartEnabled = _autoStartService.IsEnabled();
+            CurrentFontFamily = string.IsNullOrEmpty(config.Font) ? ((FontFamily)Application.Current!.Resources["AppFontFamily"]!).Name : config.Font;
         }
 
         public void Save()
@@ -72,7 +85,6 @@ namespace AvaloniaSample.Services
             config.DefaultTheme = DefaultTheme;
             config.NeedExitDialogOnClose = NeedExitDialogOnClose;
             config.HideTrayIconOnClose = HideTrayIconOnClose;
-            config.AutoOpenToolboxAtStartup = AutoOpenToolboxAtStartup;
             AppSettingsHelper.Save(config);
         }
 
@@ -85,6 +97,19 @@ namespace AvaloniaSample.Services
                 : ThemeVariant.Light;
 
             LocalizeExtension.ChangeLanguage(new CultureInfo(DefaultCulture));
+        }
+
+        public void ChangeAutoStart()
+        {
+            if (AutoStartEnabled)
+                _autoStartService.Enable();
+            else
+                _autoStartService.Disable();
+        }
+
+        public void ChangeFontFamily(FontFamily fontFamily)
+        {
+            Application.Current!.Resources["AppFontFamily"] = fontFamily;
         }
     }
 }

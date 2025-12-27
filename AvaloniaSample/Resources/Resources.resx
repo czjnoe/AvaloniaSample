@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoOpenToolboxAtStartup" xml:space="preserve">
-    <value>Auto Open Toolbox At Startup</value>
+  <data name="AutoStartEnabled" xml:space="preserve">
+    <value>Auto Start </value>
   </data>
   <data name="DisplayPromptWhenClosing" xml:space="preserve">
     <value>Display Prompt When Closing</value>
@@ -128,6 +128,9 @@
   </data>
   <data name="FindInTrayIcon" xml:space="preserve">
     <value>Find In TrayIcon</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>Font</value>
   </data>
   <data name="HideTrayIconOnClose" xml:space="preserve">
     <value>Hide Tray Icon On Close</value>

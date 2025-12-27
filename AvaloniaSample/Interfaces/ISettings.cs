@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
+using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,18 @@ namespace AvaloniaSample.Interfaces
 
         bool HideTrayIconOnClose { get; set; }
 
-        bool AutoOpenToolboxAtStartup { get; set; }
+        bool AutoStartEnabled { get; set; }
+
+        string CurrentFontFamily { get; set; }
 
         void Load();
 
         void Save();
 
         void Apply();
+
+        void ChangeAutoStart();
+
+        void ChangeFontFamily(FontFamily fontFamily);
     }
 }

@@ -28,9 +28,6 @@ namespace AvaloniaSample
         /// </summary>
         public bool HideTrayIconOnClose { get; set; }
 
-        /// <summary>
-        /// 开机自动打开程序
-        /// </summary>
-        public bool AutoOpenToolboxAtStartup { get; set; }
+        public string Font { get; set; }
     }
 }

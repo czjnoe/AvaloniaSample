@@ -8,6 +8,7 @@
 			 x:Class="AvaloniaSample.Views.UserAddView"
 			 x:DataType="vm:UserAddViewModel"
 			 Width="400" Height="250"
+			 WindowStartupLocation="CenterScreen"
 			 >
 
 	<Grid>

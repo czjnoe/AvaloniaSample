@@ -11,7 +11,7 @@
 		x:DataType="vm:MainWindowViewModel"
 		Icon="/Assets/avalonia-logo.ico"
 		Title="AvaloniaSample"
-		Width="650" 
+		Width="800"
 		Height="500"
 		ExtendClientAreaToDecorationsHint="True"
 		ExtendClientAreaChromeHints="PreferSystemChrome"
@@ -52,16 +52,20 @@
 
 			<!-- 右侧：自定义按钮 -->
 			<StackPanel Grid.Column="2" Orientation="Horizontal">
-				<Button Content="⚙" VerticalContentAlignment="Center" ToolTip.Tip="设置"
+				<Button VerticalContentAlignment="Center" ToolTip.Tip="设置"
 						Width="40" Height="40"
 						Background="Transparent"
 						BorderThickness="0"
-						Click="OnSettingsClick" />
-				<Button Content="?" ToolTip.Tip="帮助"
+						Click="OnSettingsClick" >
+					<Image Source="/Assets/setting.png" Width="20" Height="20"/>
+				</Button>
+				<Button ToolTip.Tip="帮助"
 						Width="40" Height="40"
 						Background="Transparent"
 						BorderThickness="0"
-						Click="OnHelpClick" />
+						Click="OnHelpClick">
+					<Image Source="/Assets/help.png" Width="20" Height="20"/>
+				</Button>
 			</StackPanel>
 		</Grid>
 

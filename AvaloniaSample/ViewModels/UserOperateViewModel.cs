@@ -15,12 +15,17 @@ namespace AvaloniaSample.ViewModels
     {
         private readonly IDialogService _dialogService;
 
-        public Person SelectPeople { get; set; }
+        private Person? _selectPeople;
+        public Person? SelectPeople
+        {
+            get => _selectPeople;
+            set => this.RaiseAndSetIfChanged(ref _selectPeople, value);
+        }
 
         public ObservableCollection<Person> Peoples { get; }
 
         public DelegateCommand AddCommand { get; }
-        public DelegateCommand<Person> EditCommand { get; }
+        public ICommand EditCommand { get; }
         public DelegateCommand<Person> DeleteCommand { get; }
 
         public UserOperateViewModel(IDialogService dialogService)
@@ -34,7 +39,7 @@ namespace AvaloniaSample.ViewModels
             };
             Peoples = new ObservableCollection<Person>(people);
             AddCommand = new DelegateCommand(AddClick);
-            EditCommand = new DelegateCommand<Person>(EditClick);
+            EditCommand = ReactiveCommand.CreateFromTask<Person>(EditClick);
             DeleteCommand = new DelegateCommand<Person>(DeleteClick);
         }
 
@@ -43,7 +48,7 @@ namespace AvaloniaSample.ViewModels
             ContainerLocator.Container.Resolve<UserAddView>().ShowDialog(App.Instance.MainWindow as Window);
         }
 
-        private async void EditClick(Person data)
+        private async Task EditClick(Person data)
         {
             var parameters = new DialogParameters
             {

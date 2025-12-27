@@ -17,7 +17,7 @@
 		<!-- 当前全局字体 -->
 		<FontFamily x:Key="AppFontFamily">Microsoft YaHei</FontFamily>
 		<!-- 全局字体大小 -->
-		<system:Double x:Key="AppFontSize">15</system:Double>
+		<system:Double x:Key="AppFontSize">20</system:Double>
 	</Application.Resources>
 
 	<Application.Styles>
@@ -41,7 +41,7 @@
 			Icon="/Assets/avalonia-logo.ico">
 				<TrayIcon.Menu>
 					<NativeMenu>
-						<NativeMenuItem Header="Git" Click="OpenGithub_OnClicked" />
+						<NativeMenuItem Icon="/Assets/github-fill.png" Header="Git" Click="OpenGithub_OnClicked" />
 						<NativeMenuItemSeparator />
 						<NativeMenuItem Header="{ext:Localize ShowMainWindow}" Click="OpenMainWindow_OnClicked" />
 						<NativeMenuItemSeparator />

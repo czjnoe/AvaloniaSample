@@ -132,6 +132,9 @@
   <data name="Font" xml:space="preserve">
     <value>字体</value>
   </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>字号</value>
+  </data>
   <data name="HideTrayIconOnClose" xml:space="preserve">
     <value>关闭窗体时隐藏托盘图标</value>
   </data>

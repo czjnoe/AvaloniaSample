@@ -25,6 +25,8 @@ namespace AvaloniaSample.Interfaces
 
         string CurrentFontFamily { get; set; }
 
+        double CurrentFontSize { get; set; }
+
         void Load();
 
         void Save();
@@ -33,6 +35,8 @@ namespace AvaloniaSample.Interfaces
 
         void ChangeAutoStart();
 
-        void ChangeFontFamily(FontFamily fontFamily);
+        void SetFontFamily(FontFamily fontFamily);
+
+        void SetFontSize(double fontSize);
     }
 }

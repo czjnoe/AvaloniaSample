@@ -106,6 +106,15 @@ namespace AvaloniaSample.Resources {
         }
         
         /// <summary>
+        ///   查找类似 FontSize 的本地化字符串。
+        /// </summary>
+        internal static string FontSize {
+            get {
+                return ResourceManager.GetString("FontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Hide Tray Icon On Close 的本地化字符串。
         /// </summary>
         internal static string HideTrayIconOnClose {

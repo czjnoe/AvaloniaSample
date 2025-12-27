@@ -29,5 +29,7 @@ namespace AvaloniaSample
         public bool HideTrayIconOnClose { get; set; }
 
         public string Font { get; set; }
+
+        public double? FontSize { get; set; }
     }
 }

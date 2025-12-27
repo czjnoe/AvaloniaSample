@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media;
+using AvaloniaSample.Consts;
 using AvaloniaSample.Helper;
 using AvaloniaSample.Interfaces;
 using System.Globalization;
@@ -60,6 +61,8 @@ namespace AvaloniaSample.Services
 
         public string CurrentFontFamily { get; set; }
 
+        public double CurrentFontSize { get; set; }
+
         private static string ConfigPath => System.IO.Path.Combine
         (
            AppDomain.CurrentDomain.BaseDirectory,
@@ -75,7 +78,8 @@ namespace AvaloniaSample.Services
             HideTrayIconOnClose = config.HideTrayIconOnClose;
             NeedExitDialogOnClose = config.NeedExitDialogOnClose;
             AutoStartEnabled = _autoStartService.IsEnabled();
-            CurrentFontFamily = string.IsNullOrEmpty(config.Font) ? ((FontFamily)Application.Current!.Resources["AppFontFamily"]!).Name : config.Font;
+            CurrentFontFamily = string.IsNullOrEmpty(config.Font) ? ((FontFamily)Application.Current!.Resources[GlobalConst.FontFamilyKey]!).Name : config.Font;
+            CurrentFontSize = config.FontSize ?? (double)Application.Current!.Resources[GlobalConst.FontSizeKey]!;
         }
 
         public void Save()
@@ -85,6 +89,8 @@ namespace AvaloniaSample.Services
             config.DefaultTheme = DefaultTheme;
             config.NeedExitDialogOnClose = NeedExitDialogOnClose;
             config.HideTrayIconOnClose = HideTrayIconOnClose;
+            config.FontSize = CurrentFontSize;
+            config.Font = CurrentFontFamily;
             AppSettingsHelper.Save(config);
         }
 
@@ -107,9 +113,14 @@ namespace AvaloniaSample.Services
                 _autoStartService.Disable();
         }
 
-        public void ChangeFontFamily(FontFamily fontFamily)
+        public void SetFontFamily(FontFamily fontFamily)
         {
-            Application.Current!.Resources["AppFontFamily"] = fontFamily;
+            Application.Current!.Resources[GlobalConst.FontFamilyKey] = fontFamily;
+        }
+
+        public void SetFontSize(double fontSize)
+        {
+            Application.Current!.Resources[GlobalConst.FontSizeKey] = fontSize;
         }
     }
 }

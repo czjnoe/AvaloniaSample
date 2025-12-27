@@ -132,6 +132,9 @@
   <data name="Font" xml:space="preserve">
     <value>Font</value>
   </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>FontSize</value>
+  </data>
   <data name="HideTrayIconOnClose" xml:space="preserve">
     <value>Hide Tray Icon On Close</value>
   </data>

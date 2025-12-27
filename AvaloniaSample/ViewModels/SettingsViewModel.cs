@@ -18,7 +18,7 @@ namespace AvaloniaSample.ViewModels
 {
     public partial class SettingsViewModel : ViewModelBase
     {
-        public ISettings Settings { get; }
+        public ISettings _settings { get; }
         private readonly IEventAggregator _eventAggregator;
         private readonly IAutoStartService _autoStartService;
 
@@ -59,14 +59,14 @@ namespace AvaloniaSample.ViewModels
             }
         }
 
-        private string _selected;
+        private string _selectedLanguages;
 
-        public string Selected
+        public string SelectedLanguage
         {
-            get => _selected;
+            get => _selectedLanguages;
             set
             {
-                _selected = value;
+                _selectedLanguages = value;
                 RaisePropertyChanged("Selected");
             }
         }
@@ -101,23 +101,34 @@ namespace AvaloniaSample.ViewModels
             get => _selectedFont;
             set => this.RaiseAndSetIfChanged(ref _selectedFont, value);
         }
+        public double[] FontSizes { get; } = Enumerable.Range(10, 50).Select(s => (double)s).ToArray();
+
+        private double _selectFontSize;
+        public double SelectFontSize
+        {
+            get => _selectFontSize;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectFontSize, value);
+            }
+        }
 
         public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, IAutoStartService autoStartService)
         {
-            Settings = settings;
+            _settings = settings;
             _eventAggregator = eventAggregator;
             _autoStartService = autoStartService;
-            Selected = settings.DefaultCulture;
+            SelectedLanguage = settings.DefaultCulture;
             HideTrayIconOnClose = settings.HideTrayIconOnClose;
             NeedExitDialogOnClose = settings.NeedExitDialogOnClose;
             AutoStartEnabled = settings.AutoStartEnabled;
             SelectedFont = Fonts.FirstOrDefault(s => s.FontFamily.Name == settings.CurrentFontFamily);
-
+            SelectFontSize = settings.CurrentFontSize;
             _theme = settings.DefaultTheme == Enums.Theme.Dark
                 ? ThemeVariant.Dark
                 : ThemeVariant.Light;
 
-            this.ObservableForProperty(x => x.Selected)
+            this.ObservableForProperty(x => x.SelectedLanguage)
                 .Subscribe(o =>
                 {
                     var item = o.GetValue();
@@ -129,7 +140,7 @@ namespace AvaloniaSample.ViewModels
 
                     settings.Apply();
                     settings.Save();
-                });//订阅 Selected 修改
+                });//订阅 SelectedLanguage 修改
 
             this.ObservableForProperty(x => x.Theme)
                 .Subscribe(
@@ -158,22 +169,30 @@ namespace AvaloniaSample.ViewModels
               .Subscribe(o =>
               {
                   var value = o.GetValue();
-                  settings.ChangeFontFamily(value.FontFamily);
+                  settings.SetFontFamily(value.FontFamily);
                   settings.Save();
               });//订阅 SelectedFont 修改
+
+            this.ObservableForProperty(x => x.SelectFontSize)
+            .Subscribe(o =>
+            {
+                var value = o.GetValue();
+                settings.SetFontSize(value);
+                settings.Save();
+            });//订阅 SelectFontSize 修改
         }
 
         public void ChangeHideTrayIconOnCloseHandler()
         {
-            Settings.HideTrayIconOnClose = HideTrayIconOnClose;
-            Settings.Save();
+            _settings.HideTrayIconOnClose = HideTrayIconOnClose;
+            _settings.Save();
             _eventAggregator.GetEvent<ChangeApplicationStatusEvent>().Publish(HideTrayIconOnClose);
         }
 
         public void ChangeDisplayPromptWhenClosingHandler()
         {
-            Settings.NeedExitDialogOnClose = NeedExitDialogOnClose;
-            Settings.Save();
+            _settings.NeedExitDialogOnClose = NeedExitDialogOnClose;
+            _settings.Save();
         }
     }
 }

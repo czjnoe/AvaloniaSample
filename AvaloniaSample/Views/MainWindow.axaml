@@ -59,6 +59,23 @@
 						Click="OnSettingsClick" >
 					<Image Source="/Assets/setting.png" Width="20" Height="20"/>
 				</Button>
+
+				<ToggleButton Width="40" Height="40" BorderThickness="0" Background="Transparent" Name="ImageSwitchToggle" Classes="ImageToggle" HorizontalAlignment="Center" Click="ImageSwitchToggle_Click">
+					<Panel>
+						<!-- 未选中时显示的图片 -->
+						<Image Name="UncheckedImage"
+							   Source="/Assets/cancletopmost.png"
+							   Width="20" Height="20" IsVisible="{Binding !CurrentTopmost}"
+							   />
+
+						<!-- 选中时显示的图片 -->
+						<Image Name="CheckedImage"
+							   Source="/Assets/topmost.png"
+							   Width="20" Height="20" IsVisible="{Binding CurrentTopmost}"
+							   />
+					</Panel>
+				</ToggleButton>
+
 				<Button ToolTip.Tip="帮助"
 						Width="40" Height="40"
 						Background="Transparent"

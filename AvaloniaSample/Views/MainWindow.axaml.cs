@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Platform;
 using AvaloniaSample.Events;
 using AvaloniaSample.Models;
 using AvaloniaSample.ViewModels;
@@ -144,6 +145,15 @@ namespace AvaloniaSample.Views
             if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
             {
                 BeginMoveDrag(e);
+            }
+        }
+
+        private void ImageSwitchToggle_Click(object? sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel vm)
+            {
+                var button = sender as ToggleButton;
+                vm.CurrentTopmost = button?.IsChecked ?? false;
             }
         }
     }

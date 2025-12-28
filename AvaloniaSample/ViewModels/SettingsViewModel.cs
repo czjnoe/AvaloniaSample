@@ -129,9 +129,10 @@ namespace AvaloniaSample.ViewModels
         {
             _eventAggregator = eventAggregator;
             _autoStartService = autoStartService;
+            _eventAggregator.GetEvent<ChangeNeedExitDialogOnCloseEvent>().Subscribe(ChangeDisplayPromptWhenClosingHandler);
             var setting = ContainerLocator.Container.Resolve<ISettings>();//容器获取对象
             _settings = settings;
-         
+
             this.ObservableForProperty(x => x.SelectedLanguage)
                 .Subscribe(o =>
                 {
@@ -208,6 +209,12 @@ namespace AvaloniaSample.ViewModels
         {
             _settings.NeedExitDialogOnClose = NeedExitDialogOnClose;
             _settings.Save();
+        }
+
+        public void ChangeDisplayPromptWhenClosingHandler(bool value)
+        {
+            NeedExitDialogOnClose = value;
+            ChangeDisplayPromptWhenClosingHandler();
         }
 
         public void ChangeWindowTopmostHandler()

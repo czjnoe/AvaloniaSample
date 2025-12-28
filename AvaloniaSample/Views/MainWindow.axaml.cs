@@ -87,6 +87,7 @@ namespace AvaloniaSample.Views
             var result = await Ursa.Controls.Dialog.ShowModal<ExitOptionView, ExitOptionViewModel>(vm, options: options);
             _settins.NeedExitDialogOnClose = !vm.Option;
             _settins.Save();
+            _eventAggregator.GetEvent<ChangeNeedExitDialogOnCloseEvent>().Publish(_settins.NeedExitDialogOnClose);
             return result;
         }
 

@@ -23,6 +23,7 @@ namespace AvaloniaSample.ViewModels
         public ISettings _settings { get; }
         private readonly IEventAggregator _eventAggregator;
         private readonly IAutoStartService _autoStartService;
+        private readonly IContainerProvider _container;
 
         public static string[] Languages => new[]
         {
@@ -125,12 +126,14 @@ namespace AvaloniaSample.ViewModels
             }
         }
 
-        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, IAutoStartService autoStartService)
+        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, IAutoStartService autoStartService, IContainerProvider container)
         {
+            _container = container;
             _eventAggregator = eventAggregator;
             _autoStartService = autoStartService;
             _eventAggregator.GetEvent<ChangeNeedExitDialogOnCloseEvent>().Subscribe(ChangeDisplayPromptWhenClosingHandler);
             var setting = ContainerLocator.Container.Resolve<ISettings>();//容器获取对象
+            setting = _container.Resolve<ISettings>();
             _settings = settings;
 
             this.ObservableForProperty(x => x.SelectedLanguage)

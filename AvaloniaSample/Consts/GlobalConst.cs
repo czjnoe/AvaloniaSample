@@ -10,5 +10,7 @@ namespace AvaloniaSample.Consts
     {
         public const string FontFamilyKey = "AppFontFamily";
         public const string FontSizeKey = "AppFontSize";
+
+        public const string GitPath = "https://gitee.com/czjnoe/avalonia-sample.git";
     }
 }

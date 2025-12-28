@@ -1,0 +1,306 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:AvaloniaSample.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaSample.Views.UpdateWindow"
+        x:DataType="vm:UpdateViewModel"
+        Title="UpdateWindow">
+
+    <Design.DataContext>
+        <vm:UpdateViewModel/>
+    </Design.DataContext>
+
+    <Window.Styles>
+        <!-- 卡片样式 -->
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="BoxShadow" Value="0 4 12 0 #20000000"/>
+        </Style>
+
+        <!-- 主按钮样式 -->
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#0078D4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="24,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#106EBE"/>
+        </Style>
+        <Style Selector="Button.primary:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#005A9E"/>
+        </Style>
+        <Style Selector="Button.primary:disabled /template/ ContentPresenter">
+            <Setter Property="Background" Value="#CCCCCC"/>
+        </Style>
+
+        <!-- 次要按钮样式 -->
+        <Style Selector="Button.secondary">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#666666"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="24,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.secondary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#F0F0F0"/>
+        </Style>
+
+        <!-- 成功样式 -->
+        <Style Selector="Button.success">
+            <Setter Property="Background" Value="#107C10"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="24,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.success:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#0E6B0E"/>
+        </Style>
+
+        <!-- 进度条样式 -->
+        <Style Selector="ProgressBar">
+            <Setter Property="Height" Value="8"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Background" Value="#E0E0E0"/>
+            <Setter Property="Foreground" Value="#0078D4"/>
+        </Style>
+
+        <!-- 状态标签样式 -->
+        <Style Selector="TextBlock.status">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style Selector="TextBlock.version">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#666666"/>
+        </Style>
+    </Window.Styles>
+
+    <Panel>
+        <!-- 装饰性背景 -->
+        <Canvas>
+            <Ellipse Width="300" Height="300" Fill="#10107C10" 
+                     Canvas.Right="-100" Canvas.Top="-100"/>
+            <Ellipse Width="200" Height="200" Fill="#100078D4" 
+                     Canvas.Left="-50" Canvas.Bottom="-50"/>
+        </Canvas>
+
+        <!-- 主内容 -->
+        <Grid Margin="40" RowDefinitions="Auto,*,Auto">
+            
+            <!-- 头部 -->
+            <StackPanel Grid.Row="0" Spacing="8" Margin="0,20,0,30">
+                <TextBlock Text="🚀" FontSize="48" HorizontalAlignment="Center"/>
+                <TextBlock Text="软件更新" 
+                           FontSize="28" 
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentVersion, StringFormat='当前版本: v{0}'}" 
+                           Classes="version"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- 内容区域 -->
+            <Border Grid.Row="1" Classes="card" Padding="30">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="20">
+
+                        <!-- 状态图标和消息 -->
+                        <StackPanel Spacing="15" HorizontalAlignment="Center">
+                            
+                            <!-- 检查中 -->
+                            <StackPanel Spacing="10" 
+                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Checking}"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="🔍" FontSize="64" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding StatusMessage}" 
+                                           Classes="status"
+                                           HorizontalAlignment="Center"/>
+                                <ProgressBar IsIndeterminate="True" Width="300"/>
+                            </StackPanel>
+
+                            <!-- 无更新 -->
+                            <StackPanel Spacing="10"
+                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=NoUpdate}"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="✅" FontSize="64" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding StatusMessage}" 
+                                           Classes="status"
+                                           Foreground="#107C10"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- 有更新 -->
+                            <StackPanel Spacing="10"
+                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=UpdateAvailable}"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="🎉" FontSize="64" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding StatusMessage}" 
+                                           Classes="status"
+                                           Foreground="#0078D4"
+                                           HorizontalAlignment="Center"/>
+                                <Border Background="#F0F8FF" 
+                                        CornerRadius="8" 
+                                        Padding="15,10"
+                                        Margin="0,10,0,0">
+                                    <StackPanel Spacing="5">
+                                        <TextBlock Text="{Binding LatestVersion, StringFormat='新版本: v{0}'}"
+                                                   FontSize="16"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#0078D4"/>
+                                        <TextBlock Text="包含了重要的功能更新和错误修复"
+                                                   FontSize="13"
+                                                   Foreground="#666666"
+                                                   TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- 下载中 -->
+                            <StackPanel Spacing="10"
+                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Downloading}"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="⬇️" FontSize="64" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding StatusMessage}" 
+                                           Classes="status"
+                                           HorizontalAlignment="Center"/>
+                                <ProgressBar Value="{Binding DownloadProgress}" 
+                                             Maximum="100"
+                                             Width="400"
+                                             Margin="0,10,0,0"/>
+                                <TextBlock Text="{Binding DownloadProgress, StringFormat='{}{0}%'}"
+                                           FontSize="14"
+                                           Foreground="#0078D4"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- 准备安装 -->
+                            <StackPanel Spacing="10"
+                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=ReadyToInstall}"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="✨" FontSize="64" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding StatusMessage}" 
+                                           Classes="status"
+                                           Foreground="#107C10"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="点击下方按钮安装更新并重启程序"
+                                           FontSize="13"
+                                           Foreground="#666666"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- 安装中 -->
+                            <StackPanel Spacing="10"
+                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Installing}"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="⚙️" FontSize="64" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding StatusMessage}" 
+                                           Classes="status"
+                                           HorizontalAlignment="Center"/>
+                                <ProgressBar IsIndeterminate="True" Width="300"/>
+                            </StackPanel>
+
+                            <!-- 错误 -->
+                            <StackPanel Spacing="10"
+                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Error}"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="❌" FontSize="64" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding StatusMessage}" 
+                                           Classes="status"
+                                           Foreground="#D13438"
+                                           HorizontalAlignment="Center"/>
+                                <Border Background="#FFF4F4" 
+                                        BorderBrush="#FFD6D6"
+                                        BorderThickness="1"
+                                        CornerRadius="6" 
+                                        Padding="15,10"
+                                        Margin="0,10,0,0"
+                                        MaxWidth="400"
+                                        IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                    <TextBlock Text="{Binding ErrorMessage}"
+                                               FontSize="13"
+                                               Foreground="#D13438"
+                                               TextWrapping="Wrap"/>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- 空闲状态 -->
+                            <StackPanel Spacing="10"
+                                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Idle}"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="🔄" FontSize="64" HorizontalAlignment="Center"/>
+                                <TextBlock Text="准备就绪" 
+                                           Classes="status"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="点击下方按钮检查更新"
+                                           FontSize="13"
+                                           Foreground="#666666"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- 底部按钮 -->
+            <StackPanel Grid.Row="2" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center"
+                        Spacing="15"
+                        Margin="0,30,0,0">
+                
+                <!-- 检查更新按钮 -->
+                <Button Content="检查更新"
+                        Classes="primary"
+                        Command="{Binding CheckUpdateCommand}"
+                        IsVisible="{Binding ShowUpdateButton}"
+                        Width="140"
+                        Height="40"
+                        FontSize="15"/>
+
+                <!-- 下载更新按钮 -->
+                <Button Content="下载更新"
+                        Classes="primary"
+                        Command="{Binding DownloadUpdateCommand}"
+                        IsVisible="{Binding ShowDownloadButton}"
+                        Width="140"
+                        Height="40"
+                        FontSize="15"/>
+
+                <!-- 安装并重启按钮 -->
+                <Button Content="安装并重启"
+                        Classes="success"
+                        Command="{Binding InstallUpdateCommand}"
+                        IsVisible="{Binding ShowInstallButton}"
+                        Width="140"
+                        Height="40"
+                        FontSize="15"/>
+
+                <!-- 取消按钮 -->
+                <Button Content="取消"
+                        Classes="secondary"
+                        Command="{Binding CancelCommand}"
+                        IsVisible="{Binding Status, Converter={x:Static ObjectConverters.NotEqual}, ConverterParameter=Idle}"
+                        Width="100"
+                        Height="40"
+                        FontSize="15"/>
+
+            </StackPanel>
+
+        </Grid>
+    </Panel>
+
+
+</Window>

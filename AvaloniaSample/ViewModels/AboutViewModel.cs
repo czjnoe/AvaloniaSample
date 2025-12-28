@@ -1,4 +1,7 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Controls;
+using Avalonia.Interactivity;
+using AvaloniaSample.Consts;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +16,8 @@ namespace AvaloniaSample.ViewModels
 {
     public class AboutViewModel : ViewModelBase
     {
+        private readonly IContainerProvider _container;
+
         public ReactiveCommand<Unit, Unit> OpenSourceLink { get; set; } = ReactiveCommand.Create(OpenSourceLinkClick);
 
         public string Version { get; } = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
@@ -34,9 +39,43 @@ namespace AvaloniaSample.ViewModels
             }
         }
 
+        public ReactiveCommand<Unit, Unit> CheckUpdateCommand { get; set; } =
+        ReactiveCommand.Create(CheckUpdateClick);
+
         private static void OpenSourceLinkClick()
         {
-            Process.Start(new ProcessStartInfo("https://gitee.com/czjnoe/avalonia-sample.git") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(GlobalConst.GitPath) { UseShellExecute = true });
+        }
+
+        /// <summary>
+        /// 手动检查更新
+        /// </summary>
+        private static async void CheckUpdateClick()
+        {
+            await ShowUpdateWindowAsync();
+        }
+
+        /// <summary>
+        /// 显示更新窗口
+        /// </summary>
+        private static async Task ShowUpdateWindowAsync()
+        {
+            try
+            {
+                // 从容器解析 UpdateViewModel
+                var updateViewModel = ContainerLocator.Container.Resolve<UpdateViewModel>();
+
+                // 创建更新窗口
+                var updateWindow = ContainerLocator.Container.Resolve<UpdateWindow>();
+                updateWindow.DataContext = updateViewModel;
+
+                // 显示窗口
+                await updateWindow.ShowDialog(App.Instance.MainWindow as Window);
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"显示更新窗口失败: {ex.Message}");
+            }
         }
     }
 }

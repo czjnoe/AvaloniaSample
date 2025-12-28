@@ -1,73 +1,75 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<ApplicationIcon>Assets\avalonia-logo.ico</ApplicationIcon>
+		<Version>1.0.0</Version>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="appsettings.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.7" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.7" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.3.7" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.7" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.7" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.7">
-      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Irihi.Ursa" Version="1.14.0" />
-    <PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.14.0" />
-    <PackageReference Include="Prism.Avalonia" Version="9.0.537.11130" />
-    <PackageReference Include="Prism.DryIoc.Avalonia" Version="9.0.537.11130" />
-    <PackageReference Include="ReactiveUI.Avalonia" Version="11.3.0" />
-    <PackageReference Include="Semi.Avalonia" Version="11.3.7.1" />
-    <PackageReference Include="Serilog" Version="4.3.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
-    <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageReference Include="Velopack" Version="0.0.1298" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.3.7" />
+		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.7" />
+		<PackageReference Include="Avalonia.Desktop" Version="11.3.7" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.7" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.7" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.7">
+			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Irihi.Ursa" Version="1.14.0" />
+		<PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.14.0" />
+		<PackageReference Include="Prism.Avalonia" Version="9.0.537.11130" />
+		<PackageReference Include="Prism.DryIoc.Avalonia" Version="9.0.537.11130" />
+		<PackageReference Include="ReactiveUI.Avalonia" Version="11.3.0" />
+		<PackageReference Include="Semi.Avalonia" Version="11.3.7.1" />
+		<PackageReference Include="Serilog" Version="4.3.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+		<PackageReference Include="Velopack" Version="0.0.1298" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Resources\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Views\UserAddView.axaml.cs">
-      <DependentUpon>UserAddView.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Views\UserAddView.axaml.cs">
+			<DependentUpon>UserAddView.axaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EditorConfigFiles Remove="C:\Program Files\PEER Group\PTO 8.6 SP2\AvaloniaSample\AvaloniaSample\.editorconfig" />
-  </ItemGroup>
+	<ItemGroup>
+		<EditorConfigFiles Remove="C:\Program Files\PEER Group\PTO 8.6 SP2\AvaloniaSample\AvaloniaSample\.editorconfig" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="C:\Program Files\PEER Group\PTO 8.6 SP2\AvaloniaSample\AvaloniaSample\.editorconfig" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="C:\Program Files\PEER Group\PTO 8.6 SP2\AvaloniaSample\AvaloniaSample\.editorconfig" />
+	</ItemGroup>
 </Project>

@@ -15,6 +15,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{6642C41C-E58D-49BF-99AB-5BAE069E6B69}"
 	ProjectSection(SolutionItems) = preProject
 		..\build\build.bat = ..\build\build.bat
+		..\build\upload_releases.bat = ..\build\upload_releases.bat
 	EndProjectSection
 EndProject
 Global

@@ -23,13 +23,15 @@ namespace AvaloniaSample
 
         public override void Initialize()
         {
-            // ⭐ Velopack 初始化 - 必须在最开始
             InitializeVelopack();
-            AvaloniaXamlLoader.Load(this);
-            base.Initialize();  // Required to initialize Prism.Avalonia - DO NOT REMOVE
+            AvaloniaXamlLoader.Load(this);  // 加载 XAML 资源
+            base.Initialize();  // Prism 初始化
         }
 
-
+        /// <summary>
+        /// 创建主窗口
+        /// </summary>
+        /// <returns></returns>
         protected override AvaloniaObject CreateShell()
         {
             Instance = this;
@@ -54,6 +56,7 @@ namespace AvaloniaSample
 
         /// <summary>
         /// Velopack 初始化
+        /// 检查是否是更新启动
         /// </summary>
         private void InitializeVelopack()
         {

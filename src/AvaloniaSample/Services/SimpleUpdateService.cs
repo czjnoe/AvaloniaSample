@@ -8,24 +8,19 @@ using Velopack.Sources;
 
 namespace AvaloniaSample.Services
 {
-    public class UpdateService
+    public class SimpleUpdateService
     {
         private readonly UpdateManager? _updateManager;
         private readonly string _updateUrl;
 
-        public UpdateService(string updateUrl)
+        public SimpleUpdateService(string updateUrl)
         {
             _updateUrl = updateUrl;
 
             try
             {
-                // 创建更新管理器
                 _updateManager = new UpdateManager(
-                    new GithubSource(_updateUrl, null, false));
-
-                // 或使用自定义服务器
-                // _updateManager = new UpdateManager(
-                //     new SimpleWebSource(_updateUrl));
+                    new SimpleWebSource("http://localhost:8088"));
             }
             catch (Exception ex)
             {

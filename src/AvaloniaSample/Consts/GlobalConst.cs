@@ -12,5 +12,6 @@ namespace AvaloniaSample.Consts
         public const string FontSizeKey = "AppFontSize";
 
         public const string GitPath = "https://github.com/czjnoe/AvaloniaSample";
+        public const string StaticServicePath = "http://localhost:8088";
     }
 }

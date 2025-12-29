@@ -132,11 +132,17 @@ namespace AvaloniaSample
             containerRegistry.RegisterSingleton<ISettings, Settings>();
             containerRegistry.RegisterInstance(AutoStartServiceFactory.Create("AvaloniaSample"));
             // ⭐ 注册更新服务
-            containerRegistry.RegisterSingleton<UpdateService>(() =>
+            containerRegistry.RegisterSingleton<GithubUpdateService>(() =>
             {
                 // 配置你的更新服务器地址
-                var updateUrl = GlobalConst.GitPath + "/releases";
-                return new UpdateService(updateUrl);
+                var updateUrl = GlobalConst.GitPath;
+                return new GithubUpdateService(updateUrl);
+            });
+            containerRegistry.RegisterSingleton<SimpleUpdateService>(() =>
+            {
+                // 配置你的更新服务器地址
+                var updateUrl = GlobalConst.StaticServicePath;
+                return new SimpleUpdateService(updateUrl);
             });
 
             // ViewModels

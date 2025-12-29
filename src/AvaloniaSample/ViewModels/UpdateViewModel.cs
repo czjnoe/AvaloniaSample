@@ -26,8 +26,19 @@ namespace AvaloniaSample.ViewModels
 
         public UpdateViewModel()
         {
-            _updateService = ContainerLocator.Container.Resolve<SimpleUpdateService>();
-            _currentVersion = _updateService.GetCurrentVersion();
+            try
+            {
+                _updateService = ContainerLocator.Container.Resolve<SimpleUpdateService>();
+                _currentVersion = _updateService.GetCurrentVersion();
+            }
+            catch (Exception)
+            {
+                // 如果依赖注入失败，使用默认值
+                _currentVersion = "1.0.0";
+            }
+
+            // 初始化按钮可见性
+            UpdateButtonVisibility();
 
             // 命令初始化
             CheckUpdateCommand = ReactiveCommand.CreateFromTask(CheckForUpdatesAsync);
@@ -239,7 +250,7 @@ namespace AvaloniaSample.ViewModels
         /// </summary>
         private void UpdateButtonVisibility()
         {
-            ShowUpdateButton = Status == UpdateStatus.Idle || Status == UpdateStatus.NoUpdate;
+            ShowUpdateButton = Status == UpdateStatus.Idle || Status == UpdateStatus.NoUpdate || Status == UpdateStatus.Error;
             ShowDownloadButton = Status == UpdateStatus.UpdateAvailable;
             ShowInstallButton = Status == UpdateStatus.ReadyToInstall;
         }

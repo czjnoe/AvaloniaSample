@@ -104,7 +104,7 @@ namespace AvaloniaSample.ViewModels
             get => _selectedFont;
             set => this.RaiseAndSetIfChanged(ref _selectedFont, value);
         }
-        public double[] FontSizes { get; } = Enumerable.Range(10, 50).Select(s => (double)s).ToArray();
+        public double[] FontSizes { get; } = Enumerable.Range(10, 30).Select(s => (double)s).ToArray();
 
         private double _selectFontSize;
         public double SelectFontSize

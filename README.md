@@ -1,5 +1,6 @@
-
+﻿
 ## Velopack 一款强大的跨平台应用程序安装和自动更新框架
+Velopack 文档 https://docs.velopack.io/getting-started/csharp
 
 ### 1、安装 Velopack CLI
 dotnet tool install -g vpk

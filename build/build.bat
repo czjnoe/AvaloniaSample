@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 chcp 65001 > nul
 setlocal EnableDelayedExpansion
 
@@ -169,6 +169,8 @@ vpk pack ^
   --mainExe "%APP_NAME%.exe" ^
   --packTitle "%APP_TITLE%" ^
   --packAuthors "%APP_AUTHORS%" ^
+  --runtime win-x64 ^
+  --channel win-x64 ^
   --outputDir "releases\windows-x64"
 
 if errorlevel 1 (
@@ -187,6 +189,8 @@ vpk pack ^
   --mainExe "%APP_NAME%.exe" ^
   --packTitle "%APP_TITLE%" ^
   --packAuthors "%APP_AUTHORS%" ^
+  --runtime win-x86 ^
+  --channel win-x86 ^
   --outputDir "releases\windows-x86"
 
 if errorlevel 1 (

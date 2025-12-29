@@ -11,7 +11,7 @@ namespace AvaloniaSample.ViewModels
 {
     public class UpdateViewModel : ViewModelBase
     {
-        private readonly SimpleUpdateService _updateService;
+        private readonly IUpdateService _updateService;
         private UpdateInfo? _updateInfo;
 
         private UpdateStatus _status = UpdateStatus.Idle;
@@ -28,7 +28,7 @@ namespace AvaloniaSample.ViewModels
         {
             try
             {
-                _updateService = ContainerLocator.Container.Resolve<SimpleUpdateService>();
+                _updateService = ContainerLocator.Container.Resolve<IUpdateService>();
                 _currentVersion = _updateService.GetCurrentVersion();
             }
             catch (Exception)

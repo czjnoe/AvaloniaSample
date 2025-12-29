@@ -64,7 +64,7 @@
 			</TextBlock>
 
 			<TextBlock Grid.Row="4" TextWrapping="Wrap" Grid.Column="0" VerticalAlignment="Center" Text="{ext:Localize AutoStartEnabled}" />
-			<ToggleSwitch Grid.Row="4" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" />
+			<ToggleSwitch Grid.Row="4" Grid.Column="1" OffContent="{ext:Localize TurnOff}" OnContent="{ext:Localize TurnOn}" IsChecked="{Binding AutoStartEnabled}" />
 
 			<TextBlock Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Text="{ext:Localize HideTrayIconOnClose}">
 			</TextBlock>

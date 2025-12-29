@@ -132,6 +132,8 @@ namespace AvaloniaSample
             containerRegistry.RegisterSingleton<ISettings, Settings>();
             containerRegistry.RegisterInstance(AutoStartServiceFactory.Create("AvaloniaSample"));
             containerRegistry.RegisterInstance(UpdateServiceFactory.Create());// 注册更新服务
+            //containerRegistry.Register<IUpdateService, GithubUpdateService>(nameof(UpdateServerType.GitHub));
+            //containerRegistry.Register<IUpdateService, SimpleUpdateService>(nameof(UpdateServerType.SimpleWeb));
 
             // ViewModels
             containerRegistry.Register<UserOperateViewModel>();

@@ -133,6 +133,15 @@ namespace AvaloniaSample.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Platform 的本地化字符串。
+        /// </summary>
+        internal static string Platform {
+            get {
+                return ResourceManager.GetString("Platform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Show Main Window 的本地化字符串。
         /// </summary>
         internal static string ShowMainWindow {

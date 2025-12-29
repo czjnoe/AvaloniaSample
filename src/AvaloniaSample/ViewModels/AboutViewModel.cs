@@ -22,6 +22,10 @@ namespace AvaloniaSample.ViewModels
 
         public string Version { get; } = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
 
+        public string Platform { get; } = RuntimeInformation.RuntimeIdentifier ?? "Unknown";
+
+        public string Framework { get; } = RuntimeInformation.FrameworkDescription ?? "Unknown";
+
         public static string OSString => $"{OS} {Environment.OSVersion.Version}";
 
         [SuppressMessage("ReSharper", "ConvertIfStatementToReturnStatement")]

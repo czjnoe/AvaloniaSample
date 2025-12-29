@@ -12,10 +12,10 @@ namespace AvaloniaSample.Services
         public static IUpdateService Create()
         {
             var config = AppSettingsHelper.GetConfig<Appsetting>();
-            if (config.UpdateServer.Type == UpdateServerType.GitHub)
+            if (config.UpdateServer.ServerType == UpdateServerType.GitHub)
                 return new GithubUpdateService();
 
-            if (config.UpdateServer.Type == UpdateServerType.SimpleWeb)
+            if (config.UpdateServer.ServerType == UpdateServerType.SimpleWeb)
                 return new SimpleUpdateService();
 
             throw new PlatformNotSupportedException();

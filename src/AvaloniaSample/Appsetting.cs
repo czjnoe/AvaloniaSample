@@ -39,7 +39,7 @@ namespace AvaloniaSample
 
     public class UpdateServer
     {
-        public UpdateServerType Type { get; set; } = UpdateServerType.SimpleWeb;
+        public UpdateServerType ServerType { get; set; } = UpdateServerType.SimpleWeb;
 
         public string Url { get; set; }
     }

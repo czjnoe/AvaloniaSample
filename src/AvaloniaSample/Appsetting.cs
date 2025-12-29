@@ -33,5 +33,14 @@ namespace AvaloniaSample
         public double? FontSize { get; set; }
 
         public bool Topmost { get; set; }
+
+        public UpdateServer UpdateServer { get; set; }
+    }
+
+    public class UpdateServer
+    {
+        public UpdateServerType Type { get; set; } = UpdateServerType.SimpleWeb;
+
+        public string Url { get; set; }
     }
 }

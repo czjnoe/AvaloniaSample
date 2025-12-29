@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AvaloniaSample.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,17 @@ using Velopack.Sources;
 
 namespace AvaloniaSample.Services
 {
-    public class GithubUpdateService
+    public class GithubUpdateService : IUpdateService
     {
         private readonly UpdateManager? _updateManager;
-        private readonly string _updateUrl;
 
-        public GithubUpdateService(string updateUrl)
+        public GithubUpdateService()
         {
-            _updateUrl = updateUrl;
-
             try
             {
+                var config = AppSettingsHelper.GetConfig<Appsetting>();
                 _updateManager = new UpdateManager(
-                    new GithubSource(_updateUrl, "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", false));
+                    new GithubSource(config.UpdateServer.Url, null, false));
             }
             catch (Exception ex)
             {

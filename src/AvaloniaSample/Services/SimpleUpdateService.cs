@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AvaloniaSample.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,17 @@ using Velopack.Sources;
 
 namespace AvaloniaSample.Services
 {
-    public class SimpleUpdateService
+    public class SimpleUpdateService : IUpdateService
     {
         private readonly UpdateManager? _updateManager;
-        private readonly string _updateUrl;
 
-        public SimpleUpdateService(string updateUrl)
+        public SimpleUpdateService()
         {
-            _updateUrl = updateUrl;
-
             try
             {
+                var config = AppSettingsHelper.GetConfig<Appsetting>();
                 _updateManager = new UpdateManager(
-                    new SimpleWebSource("http://localhost:8088"));
+                    new SimpleWebSource(config.UpdateServer.Url));
             }
             catch (Exception ex)
             {

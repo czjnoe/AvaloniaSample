@@ -27,8 +27,13 @@
 			</StackPanel>
 
 			<StackPanel Orientation="Horizontal" Spacing="10">
-				<TextBlock Text="System:" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" />
-				<TextBlock Text="{x:Static viewModels:AboutViewModel.OSString}" FontSize="15" VerticalAlignment="Center" />
+				<TextBlock Text="Release Date:" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" />
+				<TextBlock Text="{Binding BuildDate}" FontSize="20" VerticalAlignment="Center" />
+			</StackPanel>
+
+			<StackPanel Orientation="Horizontal" Spacing="10">
+				<TextBlock Text="System:" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" />
+				<TextBlock Text="{x:Static viewModels:AboutViewModel.OSString}" FontSize="20" VerticalAlignment="Center" />
 			</StackPanel>
 
 			<StackPanel Orientation="Horizontal" Spacing="10">

@@ -26,6 +26,8 @@ namespace AvaloniaSample.ViewModels
 
         public string Framework { get; } = RuntimeInformation.FrameworkDescription ?? "Unknown";
 
+        public string BuildDate { get; } = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location).ToString("yyyy-MM-dd");
+
         public static string OSString => $"{OS} {Environment.OSVersion.Version}";
 
         [SuppressMessage("ReSharper", "ConvertIfStatementToReturnStatement")]

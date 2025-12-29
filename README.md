@@ -8,9 +8,12 @@ dotnet tool install -g vpk
 ### 2、查看 Velopack 版本
 dotnet tool list -g | findstr vpk
 
-### 3、Velopack打包成安装程序
-vpk pack --packId AvaloniaSample --packVersion 1.0.0 --runtime win-x64 --channel win-x64 --packDir ./bin/Release/net8.0/publish/win-x64 --mainExe AvaloniaSample.exe --outputDir ./releases
+### 3、查看 Velopack 帮助
+vpk pack --help
 
-### 4、使用 build.bat 脚本一键Velopack打包
+### 4、Velopack打包成安装程序
+vpk pack --packId AvaloniaSample --packVersion 1.0.0 --runtime win-x64 --channel win-x64 --packDir ./bin/Release/net8.0/win-x64/publish --mainExe AvaloniaSample.exe --outputDir ./releases
+
+### 5、使用 build.bat 脚本一键Velopack打包
 运行时修改可以修改APP_VERSION、APP_NAME、APP_TITLE、APP_AUTHORS，打包参数APP_VERSION改成相应的版本
 

@@ -6,10 +6,16 @@
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
 		<ApplicationIcon>Assets\avalonia-logo.ico</ApplicationIcon>
+		<!--<FileVersion>1.0.0.0</FileVersion>
+		--><!-- 注意：Windows 要求 4 段数字 --><!--
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>-->
+		<AssemblyName>AvaloniaSample</AssemblyName>
 		<Version>1.0.0</Version>
-		<FileVersion>1.0.0.0</FileVersion>
-		<!-- 注意：Windows 要求 4 段数字 -->
-		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<Title>Avalonia Sample Application</Title>
+		<Authors>CZJ</Authors>
+		<!-- 可选属性 -->
+		<Product>Avalonia Sample</Product>
+		<Company>Your Company</Company>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -1,4 +1,12 @@
 ﻿
+## AvaloniaSample 跨平台桌面应用程序示例
+
+bat脚本打包
+build.bat ：项目publish
+velopack-pack.bat ：velopack打包
+build-full.bat ：项目publish+velopack打包
+
+
 ## Velopack 一款强大的跨平台应用程序安装和自动更新框架
 Velopack 文档 https://docs.velopack.io/getting-started/csharp
 

@@ -19,6 +19,8 @@ set PROJECT_DIR=..\src\AvaloniaSample
 :: ⭐ .csproj 文件名（不含路径）
 set CSPROJ_FILE=AvaloniaSample.csproj
 
+:: ⭐ 输出目录配置
+set OUTPUT_DIR=releases
 
 echo.
 echo ========================================
@@ -63,7 +65,7 @@ echo.
 :: ========================================
 :: 从 .csproj 文件中读取配置
 :: ========================================
-echo [0/3] 读取项目配置...
+echo [0/6] 读取项目配置...
 echo.
 
 :: 创建 PowerShell 脚本文件
@@ -125,16 +127,17 @@ echo.
 :: ========================================
 :: 步骤1：清理旧文件
 :: ========================================
-echo [1/3] 清理旧文件...
+echo [1/6] 清理旧文件...
 if exist "bin\Release" rd /s /q "bin\Release"
 if exist "obj\Release" rd /s /q "obj\Release"
+if exist "%OUTPUT_DIR%" rd /s /q "%OUTPUT_DIR%"
 echo ✓ 清理完成
 echo.
 
 :: ========================================
 :: 步骤2：恢复依赖
 :: ========================================
-echo [2/3] 恢复 NuGet 依赖...
+echo [2/6] 恢复 NuGet 依赖...
 dotnet restore
 if errorlevel 1 (
     echo ✗ 依赖恢复失败
@@ -147,7 +150,7 @@ echo.
 :: ========================================
 :: 步骤3：编译和发布所有平台
 :: ========================================
-echo [3/3] 编译和发布所有平台...
+echo [3/6] 编译和发布所有平台...
 echo.
 
 :: Windows x64
@@ -173,6 +176,126 @@ echo   ✓ Windows x86 发布完成
 echo.
 
 echo ✓ 所有平台发布完成
+echo.
+
+:: ========================================
+:: 步骤4：验证可执行文件
+:: ========================================
+echo [4/6] 验证可执行文件...
+echo.
+
+set "ALL_EXIST=1"
+
+if exist "bin\Release\net8.0\win-x64\publish\%APP_NAME%.exe" (
+    echo   ✓ Windows x64: %APP_NAME%.exe
+) else (
+    echo   ✗ Windows x64: %APP_NAME%.exe 不存在
+    set "ALL_EXIST=0"
+)
+
+if exist "bin\Release\net8.0\win-x86\publish\%APP_NAME%.exe" (
+    echo   ✓ Windows x86: %APP_NAME%.exe
+) else (
+    echo   ✗ Windows x86: %APP_NAME%.exe 不存在
+    set "ALL_EXIST=0"
+)
+
+echo.
+
+if "%ALL_EXIST%"=="0" (
+    echo [错误] 部分可执行文件不存在！
+    pause
+    exit /b 1
+)
+
+echo ✓ 所有可执行文件验证通过
+echo.
+
+:: ========================================
+:: 步骤5：使用 Velopack 打包
+:: ========================================
+echo [5/6] 使用 Velopack 打包...
+echo.
+
+mkdir "%OUTPUT_DIR%\windows-x64" 2>nul
+mkdir "%OUTPUT_DIR%\windows-x86" 2>nul
+
+:: 打包 Windows x64
+echo   - 打包 Windows x64...
+vpk pack ^
+  --packId %APP_NAME% ^
+  --packVersion %APP_VERSION% ^
+  --packDir "bin\Release\net8.0\win-x64\publish" ^
+  --mainExe "%APP_NAME%.exe" ^
+  --packTitle "%APP_TITLE%" ^
+  --packAuthors "%APP_AUTHORS%" ^
+  --runtime win-x64 ^
+  --channel win-x64 ^
+  --outputDir "%OUTPUT_DIR%\windows-x64"
+
+if errorlevel 1 (
+    echo   ✗ Windows x64 打包失败
+) else (
+    echo   ✓ Windows x64 打包完成
+)
+echo.
+
+:: 打包 Windows x86
+echo   - 打包 Windows x86...
+vpk pack ^
+  --packId %APP_NAME% ^
+  --packVersion %APP_VERSION% ^
+  --packDir "bin\Release\net8.0\win-x86\publish" ^
+  --mainExe "%APP_NAME%.exe" ^
+  --packTitle "%APP_TITLE%" ^
+  --packAuthors "%APP_AUTHORS%" ^
+  --runtime win-x86 ^
+  --channel win-x86 ^
+  --outputDir "%OUTPUT_DIR%\windows-x86"
+
+if errorlevel 1 (
+    echo   ✗ Windows x86 打包失败
+) else (
+    echo   ✓ Windows x86 打包完成
+)
+echo.
+
+:: ========================================
+:: 步骤6：生成打包报告
+:: ========================================
+echo [6/6] 生成打包报告...
+echo.
+
+echo ======================================== > "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo   构建报告 >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo ======================================== >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo. >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 项目路径: %CD% >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 项目文件: %CSPROJ_FILE% >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 应用名称: %APP_NAME% >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 版本号: %APP_VERSION% >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 标题: %APP_TITLE% >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 作者: %APP_AUTHORS% >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 输出目录: %OUTPUT_DIR% >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 构建时间: %date% %time% >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo. >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo 打包的平台: >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo   - Windows x64 >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo   - Windows x86 >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+echo. >> "%OUTPUT_DIR%\BUILD_REPORT.txt"
+
+echo.
+echo ========================================
+echo   打包完成！
+echo ========================================
+echo.
+echo 安装程序位置：
+echo.
+echo   Windows x64: %OUTPUT_DIR%\windows-x64\%APP_NAME%-Setup.exe
+echo   Windows x86: %OUTPUT_DIR%\windows-x86\%APP_NAME%-Setup.exe
+echo.
+echo 完整报告: %OUTPUT_DIR%\BUILD_REPORT.txt
+echo 项目路径: %CD%
 echo.
 
 pause

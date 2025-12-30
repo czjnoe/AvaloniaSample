@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{99CA701E-E0B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{6642C41C-E58D-49BF-99AB-5BAE069E6B69}"
 	ProjectSection(SolutionItems) = preProject
+		..\build\build-full.bat = ..\build\build-full.bat
 		..\build\build.bat = ..\build\build.bat
+		..\build\velopack-pack.bat = ..\build\velopack-pack.bat
 	EndProjectSection
 EndProject
 Global

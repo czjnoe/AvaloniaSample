@@ -4,10 +4,10 @@
 bat脚本打包
 build.bat ：项目publish
 velopack-pack.bat ：velopack打包
-build-full.bat ：项目publish+velopack打包
+build-and-pack.bat ：项目publish+velopack打包
 
 
-## Velopack 一款强大的跨平台应用程序安装和自动更新框架
+## 使用Velopack实现更新服务，一款强大的跨平台应用程序安装和自动更新框架
 Velopack 文档 https://docs.velopack.io/getting-started/csharp
 
 ### 1、安装 Velopack CLI

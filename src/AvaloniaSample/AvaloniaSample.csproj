@@ -77,8 +77,4 @@
 	<ItemGroup>
 		<EditorConfigFiles Remove="C:\Program Files\PEER Group\PTO 8.6 SP2\AvaloniaSample\AvaloniaSample\.editorconfig" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="C:\Program Files\PEER Group\PTO 8.6 SP2\AvaloniaSample\AvaloniaSample\.editorconfig" />
-	</ItemGroup>
 </Project>

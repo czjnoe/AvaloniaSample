@@ -145,7 +145,7 @@ namespace AvaloniaSample
             containerRegistry.Register<HelpView>();
             containerRegistry.Register<HelpViewModel>();
 
-            // Views
+            // 注册视图 Views
             containerRegistry.RegisterForNavigation<UserOperateView, UserOperateViewModel>();
 
             // Dialogs

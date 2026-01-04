@@ -24,7 +24,7 @@ namespace AvaloniaSample.ViewModels
 
         public ObservableCollection<Person> Peoples { get; }
 
-        public DelegateCommand AddCommand { get; }
+        public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
         public DelegateCommand<Person> DeleteCommand { get; }
 
@@ -38,14 +38,26 @@ namespace AvaloniaSample.ViewModels
                 new Person("James", 44)
             };
             Peoples = new ObservableCollection<Person>(people);
-            AddCommand = new DelegateCommand(AddClick);
+            AddCommand = ReactiveCommand.CreateFromTask(AddClick);
             EditCommand = ReactiveCommand.CreateFromTask<Person>(EditClick);
             DeleteCommand = new DelegateCommand<Person>(DeleteClick);
         }
 
-        private void AddClick()
+        private async Task AddClick()
         {
-            ContainerLocator.Container.Resolve<UserAddView>().ShowDialog(App.Instance.MainWindow as Window);
+            var parameters = new DialogParameters
+            {
+                { "data", new Person() }
+            };
+            var result = await _dialogService.ShowDialogAsync("UserAddView", parameters);
+            if (result.Result == ButtonResult.OK)
+            {
+                var newData = result.Parameters.GetValue<Person>("data");
+                if (newData != null && !string.IsNullOrWhiteSpace(newData.Name))
+                {
+                    Peoples.Add(newData);
+                }
+            }
         }
 
         private async Task EditClick(Person data)
@@ -69,7 +81,7 @@ namespace AvaloniaSample.ViewModels
         private void DeleteClick(Person data)
         {
             var index = Peoples.IndexOf(data);
-            if (index >= -1)
+            if (index >= 0)
             {
                 Peoples.RemoveAt(index);
             }

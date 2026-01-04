@@ -36,14 +36,14 @@ namespace AvaloniaSample.ViewModels
 
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }
-        public DialogCloseListener RequestClose { get; }
+        public DialogCloseListener RequestClose { get; set; }
 
-        public UserAddViewModel(Person data)
+        public UserAddViewModel()
         {
             SaveCommand = new DelegateCommand(SaveClick);
             CancelCommand = new DelegateCommand(CancelClick);
-            Name = data.Name;
-            Age = data.AgeInYears;
+            Name = string.Empty;
+            Age = 0;
         }
 
         public void SaveClick()
@@ -77,9 +77,19 @@ namespace AvaloniaSample.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            CurrentData = parameters.GetValue<Person>("data");
-            Name = CurrentData.Name;
-            Age = CurrentData.AgeInYears;
+            var data = parameters.GetValue<Person>("data");
+            if (data != null)
+            {
+                CurrentData = data;
+                Name = CurrentData.Name;
+                Age = CurrentData.AgeInYears;
+            }
+            else
+            {
+                // 添加新用户时，使用空值
+                Name = string.Empty;
+                Age = 0;
+            }
         }
     }
 }

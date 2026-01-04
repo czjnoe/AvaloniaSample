@@ -5,7 +5,7 @@ using ReactiveUI.Avalonia;
 
 namespace AvaloniaSample.Views;
 
-public partial class UserAddView : ReactiveWindow<UserAddViewModel>
+public partial class UserAddView : ReactiveUserControl<UserAddViewModel>
 {
     public UserAddView()
     {

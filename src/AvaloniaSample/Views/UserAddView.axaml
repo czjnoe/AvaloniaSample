@@ -1,4 +1,4 @@
-<Window xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,35 +7,75 @@
 			 xmlns:prism="http://prismlibrary.com/"
 			 x:Class="AvaloniaSample.Views.UserAddView"
 			 x:DataType="vm:UserAddViewModel"
-			 Width="400" Height="250"
-			 WindowStartupLocation="CenterScreen"
+			 Width="420" Height="300"
 			 >
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="Auto" />
-		</Grid.ColumnDefinitions>
+	<Grid Margin="24">
 		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-			Name
-		</Label>
-		<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Height="25" Text="{Binding Name}" />
-		<Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-			Age
-		</Label>
-		<TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding Age}" />
 
-		<StackPanel Grid.Row="2" Orientation="Horizontal">
-			<Button Command="{Binding SaveCommand}">Save
-			</Button>
-			<Button Command="{Binding CancelCommand}">Cancel
-			</Button>
+		<!-- 标题 -->
+		<TextBlock Grid.Row="0" 
+				   Text="添加用户" 
+				   FontSize="20" 
+				   FontWeight="SemiBold"
+				   Margin="0,0,0,24"/>
+
+		<!-- 姓名输入 -->
+		<StackPanel Grid.Row="1" Margin="0,0,0,16">
+			<TextBlock Text="姓名" 
+					   FontSize="13" 
+					   Foreground="{DynamicResource ThemeForegroundBrush}"
+					   Margin="0,0,0,6"/>
+			<TextBox Text="{Binding Name}" 
+					 Height="38"
+					 Padding="12,0"
+					 FontSize="14"
+					 Watermark="请输入姓名"/>
 		</StackPanel>
+
+		<!-- 年龄输入 -->
+		<StackPanel Grid.Row="2" Margin="0,0,0,24">
+			<TextBlock Text="年龄" 
+					   FontSize="13" 
+					   Foreground="{DynamicResource ThemeForegroundBrush}"
+					   Margin="0,0,0,6"/>
+			<NumericUpDown Value="{Binding Age}" 
+						   Height="38"
+						   Padding="12,0"
+						   FontSize="14"
+						   Minimum="0" 
+						   Maximum="120"
+						   FormatString="N0"
+						   Watermark="请输入年龄"/>
+		</StackPanel>
+
+		<!-- 按钮区域 -->
+		<Border Grid.Row="4" 
+				BorderThickness="0,1,0,0"
+				BorderBrush="{DynamicResource ThemeBorderLowBrush}"
+				Padding="0,16,0,0"
+				Margin="0,8,0,0">
+			<StackPanel Orientation="Horizontal" 
+						HorizontalAlignment="Right"
+						Spacing="10">
+				<Button Command="{Binding CancelCommand}" 
+						Content="取消"
+						MinWidth="88"
+						Padding="24,0"
+						FontSize="14"/>
+				<Button Command="{Binding SaveCommand}" 
+						Content="保存"
+						MinWidth="88"
+						Padding="24,0"
+						FontSize="14"
+						FontWeight="SemiBold"/>
+			</StackPanel>
+		</Border>
 	</Grid>
-</Window>
+</UserControl>

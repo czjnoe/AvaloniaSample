@@ -1,4 +1,4 @@
-<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:UserOperateViewModel" xmlns="https://github.com/avaloniaui"
+﻿<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:UserOperateViewModel" xmlns="https://github.com/avaloniaui"
 								xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 								xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 								xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,50 +10,77 @@
 								x:DataType="vm:UserOperateViewModel"
 								x:Class="AvaloniaSample.Views.UserOperateView">
 
-	<Grid ShowGridLines="False" Margin="10" ColumnDefinitions="120,100,100" RowDefinitions="Auto,Auto,Auto">
-		<StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"  Orientation="Horizontal"
-					HorizontalAlignment="Center"
-					Spacing="10" Margin="0,10,0,10">
-			<Button Name="addBtn" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddCommand}">Add</Button>
-		</StackPanel>
+	<Grid RowDefinitions="Auto,Auto,*" Margin="20">
+		<!-- 标题和操作按钮区域 -->
+		<Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+			<TextBlock Grid.Column="0" 
+					   Text="用户管理" 
+					   FontSize="24" 
+					   FontWeight="Bold"
+					   VerticalAlignment="Center"/>
+			<Button Grid.Column="1" 
+					Name="addBtn" 
+					Command="{Binding AddCommand}"
+					Padding="15,8"
+					MinWidth="100"
+					HorizontalAlignment="Right">
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<TextBlock Text="添加用户"/>
+				</StackPanel>
+			</Button>
+		</Grid>
 
-		<Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+		<!-- 数据表格区域 -->
+		<Border Grid.Row="2"
 				BorderThickness="1"
-				BorderBrush="Gray"
-				CornerRadius="5"
-				Padding="5">
-			<DataGrid
-			ItemsSource="{Binding Peoples}"
-			AutoGenerateColumns="False"
-			CanUserReorderColumns="True"
-			CanUserResizeColumns="True"
-			CanUserSortColumns="True"
-			IsReadOnly="False"
-			GridLinesVisibility="All" SelectedItem="{Binding SelectPeople}">
+				BorderBrush="{DynamicResource ThemeBorderMidBrush}"
+				CornerRadius="8"
+				Padding="0"
+				Background="{DynamicResource ThemeBackgroundBrush}">
+			<DataGrid ItemsSource="{Binding Peoples}"
+					  AutoGenerateColumns="False"
+					  CanUserReorderColumns="True"
+					  CanUserResizeColumns="True"
+					  CanUserSortColumns="True"
+					  IsReadOnly="False"
+					  GridLinesVisibility="Horizontal"
+					  SelectedItem="{Binding SelectPeople}"
+					  HeadersVisibility="Column"
+					  RowHeight="40"
+					 >
 				<DataGrid.ContextMenu>
 					<ContextMenu>
-						<MenuItem Header="Add"
+						<MenuItem Header="添加"
 								  Command="{Binding AddCommand}"
 								  CommandParameter="{Binding SelectPeople}"/>
 					</ContextMenu>
 				</DataGrid.ContextMenu>
 
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="Name" Width="*"
-										Binding="{Binding Name}" />
+					<DataGridTextColumn Header="姓名" 
+										Width="*"
+										Binding="{Binding Name}">
+						
+					</DataGridTextColumn>
 
-					<DataGridTemplateColumn Header="Age">
+					<DataGridTemplateColumn Header="年龄" Width="200">
+						
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate DataType="model:Person">
-								<TextBlock Text="{Binding AgeInYears, StringFormat='{}{0} years'}"
-										   VerticalAlignment="Center" HorizontalAlignment="Center" />
+								<TextBlock Text="{Binding AgeInYears, StringFormat='{}{0} 岁'}"
+										   VerticalAlignment="Center" 
+										   HorizontalAlignment="Center"
+										   Padding="10,0"/>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 						<DataGridTemplateColumn.CellEditingTemplate>
 							<DataTemplate DataType="model:Person">
 								<NumericUpDown Value="{Binding AgeInYears}"
-											   FormatString="N0" Minimum="0" Maximum="120"
-											   HorizontalAlignment="Stretch"/>
+											   FormatString="N0" 
+											   Minimum="0" 
+											   Maximum="120"
+											   HorizontalAlignment="Stretch"
+											   Margin="10,0"/>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellEditingTemplate>
 					</DataGridTemplateColumn>
@@ -64,16 +91,32 @@
 						<Setter Property="ContextMenu">
 							<Template>
 								<ContextMenu>
-									<MenuItem Header="Edit"
+									<MenuItem Header="编辑"
 											  Command="{Binding $parent[DataGrid].((vm:UserOperateViewModel)DataContext).EditCommand}"
 											  CommandParameter="{Binding}"/>
 									<Separator/>
-									<MenuItem Header="Delete"
+									<MenuItem Header="删除"
 											  Command="{Binding $parent[DataGrid].((vm:UserOperateViewModel)DataContext).DeleteCommand}"
 											  CommandParameter="{Binding}"/>
 								</ContextMenu>
 							</Template>
 						</Setter>
+						<Style.Animations>
+							<Animation Duration="0:0:0.1">
+								<KeyFrame Cue="0%">
+									<Setter Property="Opacity" Value="0.8"/>
+								</KeyFrame>
+								<KeyFrame Cue="100%">
+									<Setter Property="Opacity" Value="1.0"/>
+								</KeyFrame>
+							</Animation>
+						</Style.Animations>
+					</Style>
+					<Style Selector="DataGridRow:pointerover">
+						<Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
+					</Style>
+					<Style Selector="DataGridRow:selected">
+						<Setter Property="Background" Value="{DynamicResource ThemeAccentBrush}"/>
 					</Style>
 				</DataGrid.Styles>
 			</DataGrid>

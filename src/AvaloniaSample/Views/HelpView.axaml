@@ -1,0 +1,47 @@
+﻿<u:UrsaWindow   xmlns="https://github.com/avaloniaui"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:viewModels="using:AvaloniaSample.ViewModels"
+				xmlns:prism="http://prismlibrary.com/"
+				xmlns:u="https://irihi.tech/ursa"
+				prism:ViewModelLocator.AutoWireViewModel="True"
+				mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+				x:Class="AvaloniaSample.Views.HelpView"
+				x:DataType="viewModels:HelpViewModel"
+				xmlns:region="clr-namespace:AvaloniaSample.Consts;assembly=AvaloniaSample"
+				Width="600" WindowStartupLocation="CenterOwner"
+				Height="500"
+				>
+
+	<u:UrsaWindow.LeftContent>
+		<Grid ColumnDefinitions="Auto, *, Auto, Auto">
+
+			<StackPanel x:Name="LogoAndTitle" Grid.Row="0" Grid.Column="0" IsHitTestVisible="False"
+						VerticalAlignment="Center" Classes="h7" Margin="5 5"
+						TextElement.FontWeight="Light" Orientation="Horizontal" ClipToBounds="False">
+				<Viewbox Height="24" Width="24" IsHitTestVisible="False">
+					<Image Source="\Assets\avalonia-logo.ico" />
+				</Viewbox>
+			</StackPanel>
+		</Grid>
+	</u:UrsaWindow.LeftContent>
+	<StackPanel VerticalAlignment="Top" Margin="1 40 10 10">
+		<TextBlock
+		Margin="5,5,5,20"
+		HorizontalAlignment="Left"
+		TextWrapping="Wrap" MaxHeight="30"
+		Classes="Tertiary H6" TextTrimming="CharacterEllipsis"
+		Text="{Binding #MyTab.Tag}"
+		Theme="{StaticResource TitleTextBlock}" />
+		<TabControl TabStripPlacement="Top"
+					prism:RegionManager.RegionName="{x:Static region:RegionNames.HelpRegion}"
+					Name="MyTab" />
+
+<!--		 <TabControl Name="MyTab" 
+                    TabStripPlacement="Top"
+                    MinHeight="450"
+                    prism:RegionManager.RegionName="{x:Static region:RegionNames.HelpRegion}" />-->
+	</StackPanel>
+
+</u:UrsaWindow  >

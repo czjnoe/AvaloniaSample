@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using AvaloniaSample.Consts;
+using AvaloniaSample.RegionAdapters;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace AvaloniaSample.ViewModels
 {
-    public class AboutViewModel : ViewModelBase
+    public class AboutViewModel : ViewModelBase, ITabItemBase
     {
         private readonly IContainerProvider _container;
 
@@ -47,6 +48,14 @@ namespace AvaloniaSample.ViewModels
 
         public ReactiveCommand<Unit, Unit> CheckUpdateCommand { get; set; } =
         ReactiveCommand.Create(CheckUpdateClick);
+
+        public string? TitleKey { get; set; } = Resources.Resources.Tab_About_Title;
+        public string? MessageKey { get; set; } = Resources.Resources.Tab_About_Description;
+
+        public AboutViewModel()
+        {
+
+        }
 
         private static void OpenSourceLinkClick()
         {

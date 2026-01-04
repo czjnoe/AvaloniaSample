@@ -38,3 +38,5 @@ global using AvaloniaSample.Extensions;
 global using AvaloniaSample;
 global using Semi.Avalonia;
 global using AvaloniaSample.Consts;
+global using AvaloniaSample.Modules;
+global using AvaloniaSample.RegionAdapters;

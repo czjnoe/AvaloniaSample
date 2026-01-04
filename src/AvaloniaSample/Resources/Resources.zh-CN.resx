@@ -150,6 +150,9 @@
   <data name="SureExit" xml:space="preserve">
     <value>确认退出？</value>
   </data>
+  <data name="Tab_About_Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
   <data name="Tab_About_Language" xml:space="preserve">
     <value>语言</value>
   </data>
@@ -161,6 +164,12 @@
   </data>
   <data name="Tab_Setting_Title" xml:space="preserve">
     <value>设置</value>
+  </data>
+  <data name="Tab_UpdateLog_Description" xml:space="preserve">
+    <value>更新日志描述</value>
+  </data>
+  <data name="Tab_UpdateLog_Title" xml:space="preserve">
+    <value>更新日志</value>
   </data>
   <data name="Tab_User_Title" xml:space="preserve">
     <value>用户</value>

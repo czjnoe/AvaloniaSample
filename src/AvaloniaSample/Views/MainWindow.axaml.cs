@@ -6,12 +6,14 @@ using Avalonia.Platform;
 using AvaloniaSample.Events;
 using AvaloniaSample.Models;
 using AvaloniaSample.ViewModels;
+using DryIoc;
 using Prism.Events;
 using ReactiveUI.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Ursa.Controls;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AvaloniaSample.Views
 {
@@ -19,13 +21,15 @@ namespace AvaloniaSample.Views
     {
         private readonly ISettings _settins;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IDialogService _dialogService;
 
-        public MainWindow(ISettings settins, IEventAggregator eventAggregator)
+        public MainWindow(ISettings settins, IEventAggregator eventAggregator, IDialogService dialogService)
         {
             _settins = settins;
             _eventAggregator = eventAggregator;
             InitializeComponent();
             Init();
+            _dialogService = dialogService;
         }
 
         protected override async void OnClosing(WindowClosingEventArgs e)
@@ -133,7 +137,14 @@ namespace AvaloniaSample.Views
         /// <param name="e"></param>
         private void OnHelpClick(object? sender, RoutedEventArgs e)
         {
+            //var helpWindow = new HelpView();
+            //helpWindow.ShowDialog(this);
+            ContainerLocator.Container.Resolve<HelpView>().ShowDialog(App.Instance.MainWindow as Window);
+            //var result = await _dialogService.ShowDialogAsync("HelpView");
+            //if (result.Result == ButtonResult.OK)
+            //{
 
+            //}
         }
 
         /// <summary>

@@ -24,6 +24,7 @@
 
 	<ItemGroup>
 		<None Remove="appsettings.json" />
+		<None Remove="UpdateLog.md" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -45,6 +46,7 @@
 		</PackageReference>
 		<PackageReference Include="Irihi.Ursa" Version="1.14.0" />
 		<PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.14.0" />
+		<PackageReference Include="MarkdownAIRender" Version="0.1.16" />
 		<PackageReference Include="Prism.Avalonia" Version="9.0.537.11130" />
 		<PackageReference Include="Prism.DryIoc.Avalonia" Version="9.0.537.11130" />
 		<PackageReference Include="ReactiveUI.Avalonia" Version="11.3.0" />
@@ -76,5 +78,11 @@
 
 	<ItemGroup>
 		<EditorConfigFiles Remove="C:\Program Files\PEER Group\PTO 8.6 SP2\AvaloniaSample\AvaloniaSample\.editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="UpdateLog.md">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 </Project>

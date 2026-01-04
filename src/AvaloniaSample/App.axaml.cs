@@ -142,6 +142,9 @@ namespace AvaloniaSample
             containerRegistry.Register<MainWindowViewModel>();
             containerRegistry.Register<UpdateViewModel>();// 注册更新相关 ViewModel
             containerRegistry.Register<UpdateWindow>();// 注册更新窗口
+            //containerRegistry.Register<TabControlRegionAdapter>();
+            containerRegistry.Register<HelpView>();
+            containerRegistry.Register<HelpViewModel>();
 
             // Views
             containerRegistry.RegisterForNavigation<UserOperateView, UserOperateViewModel>();
@@ -153,13 +156,22 @@ namespace AvaloniaSample
         }
 
         /// <summary>
+        /// 注册 Region Adapter
+        /// </summary>
+        /// <param name="regionAdapterMappings"></param>
+        protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
+        {
+            base.ConfigureRegionAdapterMappings(regionAdapterMappings);
+            regionAdapterMappings.RegisterMapping(typeof(TabControl), Container.Resolve<TabControlRegionAdapter>());
+        }
+
+        /// <summary>
         /// Register modules
         /// </summary>
         /// <param name="moduleCatalog"></param>
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-
-            //// moduleCatalog.AddModule<DummyModule.DummyModule1>();
+            moduleCatalog.AddModule<HelpModule>();
         }
 
         public override void OnFrameworkInitializationCompleted()

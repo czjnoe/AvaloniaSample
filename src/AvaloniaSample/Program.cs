@@ -18,7 +18,7 @@ namespace AvaloniaSample
         [STAThread]
         public static void Main(string[] args)
         {
-            Instance = new AppSingleInstanceHelper("MyCompany.MyAvaloniaApp");
+            Instance = new AppSingleInstanceHelper("MyAvaloniaApp");
             if (!Instance.IsFirstInstance)
             {
                 Instance.SendArgumentsToFirstInstanceAsync(args)

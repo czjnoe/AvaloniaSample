@@ -160,6 +160,15 @@ namespace AvaloniaSample.Resources {
         }
         
         /// <summary>
+        ///   查找类似 About Description 的本地化字符串。
+        /// </summary>
+        internal static string Tab_About_Description {
+            get {
+                return ResourceManager.GetString("Tab_About_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Language 的本地化字符串。
         /// </summary>
         internal static string Tab_About_Language {
@@ -192,6 +201,24 @@ namespace AvaloniaSample.Resources {
         internal static string Tab_Setting_Title {
             get {
                 return ResourceManager.GetString("Tab_Setting_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Update Log Description 的本地化字符串。
+        /// </summary>
+        internal static string Tab_UpdateLog_Description {
+            get {
+                return ResourceManager.GetString("Tab_UpdateLog_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Update Log 的本地化字符串。
+        /// </summary>
+        internal static string Tab_UpdateLog_Title {
+            get {
+                return ResourceManager.GetString("Tab_UpdateLog_Title", resourceCulture);
             }
         }
         

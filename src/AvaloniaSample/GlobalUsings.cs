@@ -37,3 +37,4 @@ global using Serilog.Events;
 global using AvaloniaSample.Extensions;
 global using AvaloniaSample;
 global using Semi.Avalonia;
+global using AvaloniaSample.Consts;

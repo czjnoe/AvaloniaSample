@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using AvaloniaSample.Consts;
 using AvaloniaSample.Services;
 using AvaloniaSample.ViewModels;
@@ -159,6 +160,42 @@ namespace AvaloniaSample
         {
 
             //// moduleCatalog.AddModule<DummyModule.DummyModule1>();
+        }
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            //激活窗口
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+          && Program.Instance != null)
+            {
+                Program.Instance.OnActivate += () =>
+                {
+                    Dispatcher.UIThread.Post(async () =>
+                    {
+                        var w = desktop.MainWindow;
+                        if (w == null) return;
+
+                        w.WindowState = WindowState.Normal;// 保证窗口显示
+                        w.Show();
+
+                        var topmost = w.Topmost;
+                        if (!topmost)
+                            w.Topmost = true;// 强制置顶
+                        w.Activate();
+
+                        // 延迟 100ms 再取消 Topmost
+                        await Task.Delay(100);
+                        if (!topmost)
+                            w.Topmost = false;// 立即取消 Topmost
+                    });
+                };
+
+                Program.Instance.OnArgumentsReceived += args =>
+                {
+
+                };
+            }
+            base.OnFrameworkInitializationCompleted();
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using AvaloniaSample.Helper;
 using ReactiveUI.Avalonia;
 using System;
 
@@ -9,12 +10,22 @@ namespace AvaloniaSample
     /// </summary>
     internal sealed class Program
     {
+        public static AppSingleInstanceHelper? Instance;
+
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
         [STAThread]
         public static void Main(string[] args)
         {
+            Instance = new AppSingleInstanceHelper("MyCompany.MyAvaloniaApp");
+            if (!Instance.IsFirstInstance)
+            {
+                Instance.SendArgumentsToFirstInstanceAsync(args)
+                         .GetAwaiter().GetResult();
+                return;
+            }
+
             // 配置 Serilog
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()  // 设置最低日志级别
@@ -43,6 +54,7 @@ namespace AvaloniaSample
             }
             finally
             {
+                Instance.Dispose();
                 Log.CloseAndFlush();  // 确保日志写入完成
             }
         }

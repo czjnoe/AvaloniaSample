@@ -8,6 +8,8 @@ namespace AvaloniaSample.Consts
 {
     public static class GlobalConst
     {
+        public const string AppName = "AvaloniaSample";
+
         public const string FontFamilyKey = "AppFontFamily";
         public const string FontSizeKey = "AppFontSize";
 

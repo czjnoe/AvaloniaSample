@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace AvaloniaSample.RegionAdapters
 {
+    /// <summary>
+    /// 自定义 TabControl 区域适配器
+    /// </summary>
     public class TabControlRegionAdapter : RegionAdapterBase<TabControl>
     {
         public TabControlRegionAdapter(IRegionBehaviorFactory regionBehaviorFactory)

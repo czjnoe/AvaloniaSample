@@ -129,7 +129,6 @@ namespace AvaloniaSample
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Services
-            containerRegistry.RegisterSingleton<ISampleService, SampleService>();
             containerRegistry.RegisterSingleton<ISettings, Settings>();
             containerRegistry.RegisterInstance(AutoStartServiceFactory.Create("AvaloniaSample"));
             containerRegistry.RegisterInstance(UpdateServiceFactory.Create());// 注册更新服务
@@ -171,7 +170,8 @@ namespace AvaloniaSample
         /// <param name="moduleCatalog"></param>
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<HelpModule>();
+            moduleCatalog.ModuleRegister(typeof(App).Assembly);// 自动注册模块
+            //moduleCatalog.AddModule<HelpModule>();//手动注册模块
         }
 
         public override void OnFrameworkInitializationCompleted()

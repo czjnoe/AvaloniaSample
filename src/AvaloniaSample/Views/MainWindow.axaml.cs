@@ -137,14 +137,7 @@ namespace AvaloniaSample.Views
         /// <param name="e"></param>
         private void OnHelpClick(object? sender, RoutedEventArgs e)
         {
-            //var helpWindow = new HelpView();
-            //helpWindow.ShowDialog(this);
             ContainerLocator.Container.Resolve<HelpView>().ShowDialog(App.Instance.MainWindow as Window);
-            //var result = await _dialogService.ShowDialogAsync("HelpView");
-            //if (result.Result == ButtonResult.OK)
-            //{
-
-            //}
         }
 
         /// <summary>

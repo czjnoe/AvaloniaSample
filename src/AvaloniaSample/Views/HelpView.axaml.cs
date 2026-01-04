@@ -6,7 +6,7 @@ using Ursa.Controls;
 
 namespace AvaloniaSample.Views;
 
-public partial class HelpView : UrsaWindow
+public partial class HelpView : Window
 {
     public HelpView()
     {

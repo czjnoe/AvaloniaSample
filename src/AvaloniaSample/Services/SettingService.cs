@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace AvaloniaSample.Services
 {
-    public class Settings : ISettings
+    public class SettingService : ISettingService
     {
         private readonly IAutoStartService _autoStartService;
 
@@ -42,7 +42,7 @@ namespace AvaloniaSample.Services
         /// </summary>
         public bool AutoStartEnabled { get; set; }
 
-        public Settings(IAutoStartService autoStartService)
+        public SettingService(IAutoStartService autoStartService)
         {
             _autoStartService = autoStartService;
         }

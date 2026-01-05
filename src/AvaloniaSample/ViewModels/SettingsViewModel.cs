@@ -20,7 +20,7 @@ namespace AvaloniaSample.ViewModels
 {
     public partial class SettingsViewModel : ViewModelBase
     {
-        public ISettings _settings { get; }
+        public ISettingService _settingService { get; }
         private readonly IEventAggregator _eventAggregator;
         private readonly IAutoStartService _autoStartService;
         private readonly IContainerProvider _container;
@@ -126,15 +126,15 @@ namespace AvaloniaSample.ViewModels
             }
         }
 
-        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, IAutoStartService autoStartService, IContainerProvider container)
+        public SettingsViewModel(ISettingService settingService, IEventAggregator eventAggregator, IAutoStartService autoStartService, IContainerProvider container)
         {
             _container = container;
             _eventAggregator = eventAggregator;
             _autoStartService = autoStartService;
             _eventAggregator.GetEvent<ChangeNeedExitDialogOnCloseEvent>().Subscribe(ChangeDisplayPromptWhenClosingHandler);
-            var setting = ContainerLocator.Container.Resolve<ISettings>();//容器获取对象
-            setting = _container.Resolve<ISettings>();
-            _settings = settings;
+            var setting = ContainerLocator.Container.Resolve<ISettingService>();//容器获取对象
+            setting = _container.Resolve<ISettingService>();
+            _settingService = settingService;
 
             this.ObservableForProperty(x => x.SelectedLanguage)
                 .Subscribe(o =>
@@ -144,10 +144,10 @@ namespace AvaloniaSample.ViewModels
                     if (string.IsNullOrEmpty(item))
                         return;
 
-                    settings.DefaultCulture = item;
+                    settingService.DefaultCulture = item;
 
-                    settings.SetLanguage();
-                    settings.Save();
+                    settingService.SetLanguage();
+                    settingService.Save();
                 });//订阅 SelectedLanguage 修改
 
             this.ObservableForProperty(x => x.Theme)
@@ -156,8 +156,8 @@ namespace AvaloniaSample.ViewModels
                     {
                         var t = o.GetValue();
                         Application.Current!.RequestedThemeVariant = t;
-                        settings.DefaultTheme = Themes.ToList().IndexOf(t);
-                        settings.Save();
+                        settingService.DefaultTheme = Themes.ToList().IndexOf(t);
+                        settingService.Save();
                     }
                 );//订阅 Theme 修改
 
@@ -165,24 +165,24 @@ namespace AvaloniaSample.ViewModels
                .Subscribe(o =>
                {
                    var value = o.GetValue();
-                   settings.AutoStartEnabled = value;
-                   settings.ChangeAutoStart();
+                   settingService.AutoStartEnabled = value;
+                   settingService.ChangeAutoStart();
                });//订阅 AutoStartEnabled 修改
 
             this.ObservableForProperty(x => x.SelectedFont)
               .Subscribe(o =>
               {
                   var value = o.GetValue();
-                  settings.SetFontFamily(value.FontFamily);
-                  settings.Save();
+                  settingService.SetFontFamily(value.FontFamily);
+                  settingService.Save();
               });//订阅 SelectedFont 修改
 
             this.ObservableForProperty(x => x.SelectFontSize)
             .Subscribe(o =>
             {
                 var value = o.GetValue();
-                settings.SetFontSize(value);
-                settings.Save();
+                settingService.SetFontSize(value);
+                settingService.Save();
             });//订阅 SelectFontSize 修改
 
             Init();
@@ -190,28 +190,28 @@ namespace AvaloniaSample.ViewModels
 
         private void Init()
         {
-            _settings.Load();
-            SelectedLanguage = _settings.DefaultCulture;
-            HideTrayIconOnClose = _settings.HideTrayIconOnClose;
-            NeedExitDialogOnClose = _settings.NeedExitDialogOnClose;
-            AutoStartEnabled = _settings.AutoStartEnabled;
-            SelectedFont = Fonts.FirstOrDefault(s => s.FontFamily.Name == _settings.CurrentFontFamily);
-            SelectFontSize = _settings.CurrentFontSize;
-            Theme = Themes[(int)_settings.DefaultTheme];
-            CurrentTopmost = _settings.Topmost;
+            _settingService.Load();
+            SelectedLanguage = _settingService.DefaultCulture;
+            HideTrayIconOnClose = _settingService.HideTrayIconOnClose;
+            NeedExitDialogOnClose = _settingService.NeedExitDialogOnClose;
+            AutoStartEnabled = _settingService.AutoStartEnabled;
+            SelectedFont = Fonts.FirstOrDefault(s => s.FontFamily.Name == _settingService.CurrentFontFamily);
+            SelectFontSize = _settingService.CurrentFontSize;
+            Theme = Themes[(int)_settingService.DefaultTheme];
+            CurrentTopmost = _settingService.Topmost;
         }
 
         public void ChangeHideTrayIconOnCloseHandler()
         {
-            _settings.HideTrayIconOnClose = HideTrayIconOnClose;
-            _settings.Save();
+            _settingService.HideTrayIconOnClose = HideTrayIconOnClose;
+            _settingService.Save();
             _eventAggregator.GetEvent<ChangeApplicationStatusEvent>().Publish(HideTrayIconOnClose);
         }
 
         public void ChangeDisplayPromptWhenClosingHandler()
         {
-            _settings.NeedExitDialogOnClose = NeedExitDialogOnClose;
-            _settings.Save();
+            _settingService.NeedExitDialogOnClose = NeedExitDialogOnClose;
+            _settingService.Save();
         }
 
         public void ChangeDisplayPromptWhenClosingHandler(bool value)
@@ -223,8 +223,8 @@ namespace AvaloniaSample.ViewModels
         public void ChangeWindowTopmostHandler()
         {
             _eventAggregator.GetEvent<ChangeWindowTopmostEvent>().Publish(CurrentTopmost);
-            _settings.Topmost = CurrentTopmost;
-            _settings.Save();
+            _settingService.Topmost = CurrentTopmost;
+            _settingService.Save();
         }
     }
 }

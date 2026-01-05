@@ -19,13 +19,13 @@ namespace AvaloniaSample.Views
 {
     public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
-        private readonly ISettings _settins;
+        private readonly ISettingService _settingService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IDialogService _dialogService;
 
-        public MainWindow(ISettings settins, IEventAggregator eventAggregator, IDialogService dialogService)
+        public MainWindow(ISettingService settingService, IEventAggregator eventAggregator, IDialogService dialogService)
         {
-            _settins = settins;
+            _settingService = settingService;
             _eventAggregator = eventAggregator;
             InitializeComponent();
             Init();
@@ -37,9 +37,9 @@ namespace AvaloniaSample.Views
             e.Cancel = true;
 
             var dialogResult = Ursa.Controls.DialogResult.OK;
-            if (_settins.HideTrayIconOnClose)
+            if (_settingService.HideTrayIconOnClose)
             {
-                if (_settins.NeedExitDialogOnClose)
+                if (_settingService.NeedExitDialogOnClose)
                 {
                     dialogResult = await ShowOptionDialogAsync(AvaloniaSample.Resources.Resources.FindInTrayIcon,
                         DialogMode.Info,
@@ -55,7 +55,7 @@ namespace AvaloniaSample.Views
                 return;
             }
 
-            if (_settins.NeedExitDialogOnClose)
+            if (_settingService.NeedExitDialogOnClose)
             {
                 dialogResult = await ShowOptionDialogAsync(AvaloniaSample.Resources.Resources.SureExit, DialogMode.Warning,
                     DialogButton.OKCancel);
@@ -85,24 +85,24 @@ namespace AvaloniaSample.Views
             var vm = new ExitOptionViewModel()
             {
                 Message = message,
-                Option = !_settins.NeedExitDialogOnClose,
+                Option = !_settingService.NeedExitDialogOnClose,
                 OptionContent = AvaloniaSample.Resources.Resources.NoMorePrompts
             };
             var result = await Ursa.Controls.Dialog.ShowModal<ExitOptionView, ExitOptionViewModel>(vm, options: options);
-            _settins.NeedExitDialogOnClose = !vm.Option;
-            _settins.Save();
-            _eventAggregator.GetEvent<ChangeNeedExitDialogOnCloseEvent>().Publish(_settins.NeedExitDialogOnClose);
+            _settingService.NeedExitDialogOnClose = !vm.Option;
+            _settingService.Save();
+            _eventAggregator.GetEvent<ChangeNeedExitDialogOnCloseEvent>().Publish(_settingService.NeedExitDialogOnClose);
             return result;
         }
 
         private void Init()
         {
-            _settins.Load();
+            _settingService.Load();
             _eventAggregator.GetEvent<ChangeApplicationStatusEvent>()
                 .Subscribe(ChangeApplicationStatus);
             _eventAggregator.GetEvent<ChangeWindowTopmostEvent>()
                .Subscribe(SetWindowTopmost);
-            SetWindowTopmost(_settins.Topmost);
+            SetWindowTopmost(_settingService.Topmost);
         }
 
         private void ChangeApplicationStatus(bool value)

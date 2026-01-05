@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AvaloniaSample.Interfaces
 {
-    public interface ISettings
+    public interface ISettingService
     {
         bool PlatformChanged { get; }
 

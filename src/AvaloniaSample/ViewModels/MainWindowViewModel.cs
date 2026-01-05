@@ -18,7 +18,7 @@ namespace AvaloniaSample.ViewModels
     {
         public SettingsViewModel SettingsViewModel { get; }
         public UserOperateViewModel UserOperateViewModel { get; }
-        private readonly ISettings _settings;
+        private readonly ISettingService _settingService;
         private readonly IEventAggregator _eventAggregator;
 
         private bool currentTopmost;
@@ -32,25 +32,25 @@ namespace AvaloniaSample.ViewModels
             }
         }
 
-        public MainWindowViewModel(SettingsViewModel settingsViewModel, UserOperateViewModel userOperateViewModel, ISettings settings, IEventAggregator eventAggregator)
+        public MainWindowViewModel(SettingsViewModel settingsViewModel, UserOperateViewModel userOperateViewModel, ISettingService settingService, IEventAggregator eventAggregator)
         {
             SettingsViewModel = settingsViewModel;
             UserOperateViewModel = userOperateViewModel;
-            _settings = settings;
+            _settingService = settingService;
             _eventAggregator = eventAggregator;
             Init();
         }
 
         private void Init()
         {
-            CurrentTopmost = _settings.Topmost;
+            CurrentTopmost = _settingService.Topmost;
         }
 
         public void ChangeWindowTopmostHandler()
         {
             _eventAggregator.GetEvent<ChangeWindowTopmostEvent>().Publish(CurrentTopmost);
-            _settings.Topmost = CurrentTopmost;
-            _settings.Save();
+            _settingService.Topmost = CurrentTopmost;
+            _settingService.Save();
         }
     }
 }

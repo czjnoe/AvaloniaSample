@@ -129,7 +129,7 @@ namespace AvaloniaSample
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Services
-            containerRegistry.RegisterSingleton<ISettings, Settings>();
+            containerRegistry.RegisterSingleton<ISettingService, SettingService>();
             containerRegistry.RegisterInstance(AutoStartServiceFactory.Create("AvaloniaSample"));
             containerRegistry.RegisterInstance(UpdateServiceFactory.Create());// 注册更新服务
             //containerRegistry.Register<IUpdateService, GithubUpdateService>(nameof(UpdateServerType.GitHub));

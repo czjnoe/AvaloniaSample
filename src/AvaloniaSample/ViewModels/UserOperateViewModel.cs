@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ursa.Controls;
 
 namespace AvaloniaSample.ViewModels
 {
@@ -78,8 +79,11 @@ namespace AvaloniaSample.ViewModels
             }
         }
 
-        private void DeleteClick(Person data)
+        private async void DeleteClick(Person data)
         {
+            var msgResult = await MessageBox.ShowAsync("确定删除？", "提示",icon: MessageBoxIcon.Question,  button: MessageBoxButton.OKCancel);
+            if (msgResult == MessageBoxResult.Cancel)
+                return;
             var index = Peoples.IndexOf(data);
             if (index >= 0)
             {

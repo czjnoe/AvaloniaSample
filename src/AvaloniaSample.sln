@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{6642C41C
 		..\build\build-and-pack.bat = ..\build\build-and-pack.bat
 		..\build\build.bat = ..\build\build.bat
 		..\git-batch-pull.bat = ..\git-batch-pull.bat
+		..\build\build-publish.bat = ..\build\build-publish.bat
 		..\git-pull.bat = ..\git-pull.bat
 		..\git-push.bat = ..\git-push.bat
 		..\git-tool.bat = ..\git-tool.bat

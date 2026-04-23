@@ -58,7 +58,7 @@ namespace AvaloniaSample.ViewModels
             set
             {
                 _theme = value;
-                RaisePropertyChanged("Theme");
+                RaisePropertyChanged(nameof(Theme));
             }
         }
 
@@ -70,7 +70,7 @@ namespace AvaloniaSample.ViewModels
             set
             {
                 _selectedLanguages = value;
-                RaisePropertyChanged("Selected");
+                RaisePropertyChanged(nameof(SelectedLanguage));
             }
         }
 

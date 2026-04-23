@@ -11,18 +11,30 @@ namespace AvaloniaSample.Extensions
 {
     internal sealed class LocalizeExtension : MarkupExtension, INotifyPropertyChanged
     {
+        public static LocalizeExtension Instance { get; } = new();
+
         public static void ChangeLanguage(CultureInfo ci)
         {
             Resources.Resources.Culture = ci;
             OnLanguageChanged?.Invoke();
         }
 
-        private static event Action? OnLanguageChanged;
+        public static event Action? OnLanguageChanged;
 
         private string Key { get; }
 
-        public string Result =>
-            Resources.Resources.ResourceManager.GetString(Key, Resources.Resources.Culture)?.Replace("\\n", "\n") ?? $"#{Key}#";
+        public string Result => GetString(Key);
+        public string this[string key] => GetString(key);
+
+        public static string GetString(string key)
+        {
+            return Resources.Resources.ResourceManager.GetString(key, Resources.Resources.Culture)?.Replace("\\n", "\n") ?? $"#{key}#";
+        }
+
+        private LocalizeExtension()
+        {
+            Key = string.Empty;
+        }
 
         public LocalizeExtension(string key)
         {

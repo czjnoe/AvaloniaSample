@@ -6,8 +6,7 @@ setlocal EnableDelayedExpansion
 :: 配置区域 - 根据你的项目修改
 :: ========================================
 
-:: ⭐ 项目路径配置（相对或绝对路径）
-:: 示例1：相对路径
+:: ⭐ 项目相对路径配置（相对或绝对路径）
 set PROJECT_DIR=..\src\AvaloniaSample
 
 :: 示例2：绝对路径
@@ -15,6 +14,7 @@ set PROJECT_DIR=..\src\AvaloniaSample
 
 :: 示例3：如果脚本在 scripts 文件夹，项目在上一级
 :: set PROJECT_DIR=..
+
 
 :: ⭐ .csproj 文件名（不含路径）
 set CSPROJ_FILE=AvaloniaSample.csproj
@@ -74,10 +74,12 @@ echo $assemblyName = if ($pg.AssemblyName) { $pg.AssemblyName } else { '%CSPROJ_
 echo $version = if ($pg.Version) { $pg.Version } elseif ($pg.AssemblyVersion) { $pg.AssemblyVersion } else { '1.0.0' } >> temp_read.ps1
 echo $title = if ($pg.Title) { $pg.Title } elseif ($pg.Product) { $pg.Product } else { $assemblyName } >> temp_read.ps1
 echo $authors = if ($pg.Authors) { $pg.Authors } elseif ($pg.Company) { $pg.Company } else { 'Author' } >> temp_read.ps1
+echo $tfm = if ($pg.TargetFramework) { $pg.TargetFramework } elseif ($pg.TargetFrameworks) { $pg.TargetFrameworks.Split(';')[0] } else { 'net8.0' } >> temp_read.ps1
 echo Write-Output "SET APP_NAME=$assemblyName" >> temp_read.ps1
 echo Write-Output "SET APP_VERSION=$version" >> temp_read.ps1
 echo Write-Output "SET APP_TITLE=$title" >> temp_read.ps1
 echo Write-Output "SET APP_AUTHORS=$authors" >> temp_read.ps1
+echo Write-Output "SET TFM=$tfm" >> temp_read.ps1
 
 :: 执行 PowerShell 脚本
 powershell -ExecutionPolicy Bypass -File temp_read.ps1 > temp_config.bat
@@ -112,12 +114,16 @@ if "%APP_AUTHORS%"=="" (
     set APP_AUTHORS=Author
 )
 
+if "%TFM%"=="" (
+    set TFM=net8.0
+)
+
 echo [配置信息]
 echo   应用名称 (AssemblyName): %APP_NAME%
 echo   版本号 (Version): %APP_VERSION%
 echo   标题 (Title): %APP_TITLE%
 echo   作者 (Authors): %APP_AUTHORS%
-echo   输出目录: %OUTPUT_DIR%
+echo   目标框架 (TFM): %TFM%
 echo.
 echo ✓ 配置读取完成
 echo.
@@ -152,24 +158,24 @@ echo.
 
 :: Windows x64
 echo   - 发布 Windows x64...
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=false
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=false -o "bin\Release\%TFM%\win-x64"
 if errorlevel 1 (
     echo   ✗ Windows x64 发布失败
     pause
     exit /b 1
 )
-echo   ✓ Windows x64 发布完成
+echo   ✓ Windows x64 发布完成，输出路径: bin\Release\%TFM%\win-x64
 echo.
 
 :: Windows x86
 echo   - 发布 Windows x86...
-dotnet publish -c Release -r win-x86 --self-contained true -p:PublishSingleFile=false
+dotnet publish -c Release -r win-x86 --self-contained true -p:PublishSingleFile=false -o "bin\Release\%TFM%\win-x86"
 if errorlevel 1 (
     echo   ✗ Windows x86 发布失败
     pause
     exit /b 1
 )
-echo   ✓ Windows x86 发布完成
+echo   ✓ Windows x86 发布完成，输出路径: bin\Release\%TFM%\win-x86
 echo.
 
 echo ✓ 所有平台发布完成
